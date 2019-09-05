@@ -7425,7 +7425,7 @@ h1, h2, h3, h4, h5,
     bottom: 40px;
     right: 1.5em;
     left: 1.5em;
-    font-size: 14px;
+    font-size: 30px;
     font-weight: 400;
     color: rgba(0, 0, 0, 0.6);
     padding: 0 20px; }
@@ -7575,7 +7575,7 @@ h1, h2, h3, h4, h5,
     background: #fff;
     z-index: 0; }
   .hero-wrap.hero-wrap-2 .overlay {
-    opacity: .8; }
+    opacity: .6; }
   .hero-wrap .text {
     z-index: 1;
     font-size: 18px;
@@ -7589,9 +7589,9 @@ h1, h2, h3, h4, h5,
       -ms-border-radius: 50%;
       border-radius: 50%; }
     .hero-wrap .text .subheading {
-      font-size: 24px;
-      color: #bfbfbf;
-      font-weight: 300; }
+      font-size: 30px;
+      color: #000;
+      font-weight: 600; }
     .hero-wrap .text h1 {
       letter-spacing: 1px;
       font-weight: 900; }
