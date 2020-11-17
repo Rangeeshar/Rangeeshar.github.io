@@ -1,78 +1,122 @@
 <!DOCTYPE html>
-<html lang=en>
+<html lang="en" >
 <head>
-<title>Rangeesh - A personal portfolio !</title>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel=stylesheet>
-<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700" rel=stylesheet>
-<link rel=stylesheet href=css/open-iconic-bootstrap.min.css>
-<link rel=stylesheet href=css/animate.css>
-<link rel=stylesheet href=css/owl.carousel.min.css>
-<link rel=stylesheet href=css/owl.theme.default.min.css>
-<link rel=stylesheet href=css/magnific-popup.css>
-<link rel=stylesheet href=css/custom_flip.css>
-<link rel=stylesheet href=css/ionicons.min.css>
-<link rel=stylesheet href=css/flaticon.css>
-<link rel=stylesheet href=css/icomoon.css>
-<link rel=stylesheet href=css/style.css>
-<link rel=apple-touch-icon sizes=180x180 href=/images/apple-touch-icon.png>
-<link rel=icon type=image/png sizes=32x32 href=/images/favicon-32x32.png>
-<link rel=icon type=image/png sizes=16x16 href=/images/favicon-16x16.png>
-<link rel="shortcut icon" href=/images/favicon.ico>
-<link rel=manifest href=/site.webmanifest>
+  <meta charset="UTF-8">
+  <title>Rangeesh - Personal Portfolio</title>
+  <title>RANGEESH</title>
+  <meta name="description" content="Web designer and front-end developer">
+  <link href='https://fonts.googleapis.com/css?family=Raleway:100,200,400,600' rel='stylesheet' type='text/css'>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.7.4/jquery.fullPage.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css'>
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css'><link rel="stylesheet" href="./style.css">
+
 </head>
 <body>
-<div id=colorlib-page>
-<a href=# class="js-colorlib-nav-toggle colorlib-nav-toggle"><i></i></a>
-<aside id=colorlib-aside role=complementary class="js-fullheight text-center">
-<h1 id=colorlib-logo><a href=index.html>Software <span>Developer</span></a></h1>
-<nav id=colorlib-main-menu role=navigation>
-<p>Hi There ! Welcome to my portfolio, I'm Rangeesh and i love to code, If you want to know more about me download my resume below or flip the card to know a summary of me.</p>
-<a href=files/Rangeesh_Resume.pdf class="btn btn-btn-default" role="button" download>Download Resume <span class=icon-file></span></a>
-</nav>
-<div class=colorlib-footer>
-<ul>
-<li><a href=https://github.com/Rangeeshar target=_blank><i class=icon-github></i></a></li>
-<li><a href=https://www.hackerearth.com/@rajagopal.rangeesh target=_blank><i class=icon-code></i></a></li>
-<li><a href=https://www.linkedin.com/in/arrangeesh/ target=_blank><i class=icon-linkedin></i></a></li>
-<li><a href=https://stackoverflow.com/users/5386826/rangeesh target=_blank><i class=icon-book></i></a></li>
-</ul>
+<!-- partial:index.partial.html -->
+<body>
+<!-- navbar header -->
+<div class="nav-header">
+  <i class="fa fa-bars fa-3x"></i>
+    <div class="header-links">
+      <ul>
+        <li data-menuanchor="thirdPage"><a href="#portfolio">PORTFOLIO</a></li>
+        <li data-menuanchor="secondPage"><a href="#about">ABOUT</a></li>
+      </ul>
+    </div>
+  </div>
 </div>
-</aside>
-<div id=colorlib-main>
-<div class="hero-wrap js-fullheight" style=background-image:url(images/bg_1.webp) data-stellar-background-ratio=0.5>
-<div class=overlay></div>
-<div class="js-fullheight d-flex justify-content-center align-items-center">
-<div class="col-md-4 text text-center">
-<div class=flip-card>
-<div class=flip-card-inner>
-<div class=flip-card-front>
-<img src=images/author.webp alt=Avatar style=width:300px;height:300px>
+<!-- end navbar header -->
+
+<!-- sidebar slider -->
+<div class="nav-screen">
+  <i class="fa fa-times fa-3x"></i>
+  <div class="nav-container">
+    <div class="nav-links">
+      <ul id='myMenu'>
+        <li data-menuanchor="secondPage"><a href="#about">ABOUT</a></li>
+        <li data-menuanchor="thirdPage"><a href="#portfolio">PORTFOLIO</a></li>
+      </ul>
+    </div>
+  </div>
 </div>
-<div class=flip-card-back>
-<h1>Rangeesh</h1>
-<p>Computer Science Engineer & Programmer</p>
-<p>Software Engineer @ DeepCompute</p>
+<!-- end navbar slider -->
+
+  
+
+<!-- begin fullpage -->
+
+<div id="fullpage">
+
+  <!-- begin section -->
+
+  <div class="section aboutme" data-anchor="aboutme">
+    <div class="opaque-bg animated fadeInDown">
+      <h1 style="color:white">Rangeesh<span style="color:#FF6363"></span> A R</h1>
+      <p><span id="holder"></span><span class="blinking-cursor">|</span></p>
+    </div>
+      <i id="moveDown" class="fa fa-chevron-down fa-3x bounce"></i>
+  </div>
+  <!-- end section -->
+
+  <!-- begin section -->
+
+  <div class="section" data-anchor="skills">
+    <div class="content">
+      <h1 class="wow fadeInDown" data-wow-delay="0.2s">ABOUT ME</h1>
+      <p class="wow fadeInDown" data-wow-delay="0.2s">Hi, I'm Rangeesh ! I'm a Programmer & Part Time Freelancer, below are most done services for differenet clients.</p>
+
+      <div class=" wow fadeInUp container-skillbar" data-wow-delay="0.2s">
+        <div class="skillbar clearfix " data-percent="90%">
+          <div class="skillbar-title" style="background: #DD1E2F;"><span>Website Development</span></div>
+          <div class="skillbar-bar" style="background: #DD1E2F;"></div>
+          <div class="skill-bar-percent">90%</div>
+        </div> <!-- End Skill Bar -->
+
+        <div class="skillbar clearfix " data-percent="80%">
+          <div class="skillbar-title" style="background: #EBB035;"><span>Custom Small Projects</span></div>
+          <div class="skillbar-bar" style="background: #EBB035;"></div>
+          <div class="skill-bar-percent">80%</div>
+        </div> <!-- End Skill Bar -->
+
+        <div class="skillbar clearfix " data-percent="50%">
+          <div class="skillbar-title" style="background: #218559;"><span>Architect Tech project</span></div>
+          <div class="skillbar-bar" style="background: #218559;"></div>
+          <div class="skill-bar-percent">50%</div>
+        </div> <!-- End Skill Bar -->
+
+        <div class="skillbar clearfix " data-percent="45%">
+          <div class="skillbar-title" style="background: #6840D4;"><span>Devops Related</span></div>
+          <div class="skillbar-bar" style="background: #6840D4;"></div>
+          <div class="skill-bar-percent">45%</div>
+        </div> <!-- End Skill Bar -->
+      </div>
+    </div>
+  </div>
+  <!-- end section -->
+
+  <!-- begin section -->
+
+  <div class="section fp-auto-height">
+    <div class="footer">
+      <p>CONNECT WITH ME</p>
+      <div class="social-links">
+        <span><a href="https://www.linkedin.com/in/arrangeesh/" target="_blank"><i class="fa fa-linkedin fa-2x"></i></a></span>
+        <span><a href="https://stackoverflow.com/users/story/5386826" target="_blank"><i class="fa fa-stack-overflow fa-2x"></i></a></span>
+        <span><a href="https://github.com/Rangeeshar" target="_blank"><i class="fa fa-github fa-2x"></i></a></span>
+      </div>
+    </div>
+  </div>
+  <!-- end section -->
+
 </div>
-</div>
-</div>
-<div class=desc>
-<h2 class=subheading>Hi There ! Flip me to know about me.</h2>
-</div>
-</div>
-</div>
-</div>
-<script src=js/jquery.min.js></script>
-<script src=js/jquery-migrate-3.0.1.min.js></script>
-<script src=js/bootstrap.min.js></script>
-<script src=js/jquery.easing.1.3.js></script>
-<script src=js/jquery.waypoints.min.js></script>
-<script src=js/jquery.stellar.min.js></script>
-<script src=js/owl.carousel.min.js></script>
-<script src=js/jquery.magnific-popup.min.js></script>
-<script src=js/aos.js></script>
-<script src=js/scrollax.min.js></script>
-<script src=js/main.js></script>
+<!-- end fullpage -->
+</body>
+<!-- partial -->
+  <script src='https://code.jquery.com/jquery-2.1.1.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.7.4/jquery.fullPage.min.js'></script><script  src="./script.js"></script>
+
 </body>
 </html>
