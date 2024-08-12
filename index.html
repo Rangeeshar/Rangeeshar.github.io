@@ -9,9 +9,32 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="manifest" href="/site.webmanifest">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+  .responsive-iframe-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* This maintains a 16:9 aspect ratio */
+    height: 0;
+    overflow: hidden;
+  }
+
+  .responsive-iframe-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+</style>
 <meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
 </head>
 <body>
-<iframe src="https://v2-embednotion.com/40c752ee144042a99cacbfe50175c655" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; border: none; padding: 0; margin: 0; z-index: 9999;"></iframe>
+<div class="responsive-iframe-container">
+  <iframe
+      src="https://www.notion.so/Rangeesh-Rajagopal-40c752ee144042a99cacbfe50175c655?pvs=4"
+      allowfullscreen>
+  </iframe>
+</div>
 </body>
 </html>
