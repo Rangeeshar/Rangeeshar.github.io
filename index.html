@@ -1,689 +1,908 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Rangeesh Rajagopal</title><style>
-/* cspell:disable-file */
-/* webkit printing magic: print all background colors */
-html {
-	-webkit-print-color-adjust: exact;
-}
-* {
-	box-sizing: border-box;
-	-webkit-print-color-adjust: exact;
-}
-
-html,
-body {
-	margin: 0;
-	padding: 0;
-}
-@media only screen {
-	body {
-		margin: 2em auto;
-		max-width: 900px;
-		color: rgb(55, 53, 47);
-	}
-}
-/* Dark theme styling */
-body {
-	line-height: 1.5;
-	white-space: pre-wrap;
-	  background-color: #121212;
-    color: #e0e0e0;
-    font-family: Arial, sans-serif;
-}
-
-a,
-a.visited {
-	color: inherit;
-	text-decoration: underline;
-}
-
-.pdf-relative-link-path {
-	font-size: 80%;
-	color: #444;
-}
-
-h1,
-h2,
-h3 {
-	letter-spacing: -0.01em;
-	line-height: 1.2;
-	font-weight: 600;
-	margin-bottom: 0;
-	color: #ffffff;
-}
-
-.page-title {
-	font-size: 2.5rem;
-	font-weight: 700;
-	margin-top: 0;
-	margin-bottom: 0.75em;
-}
-
-h1 {
-	font-size: 1.875rem;
-	margin-top: 1.875rem;
-}
-
-h2 {
-	font-size: 1.5rem;
-	margin-top: 1.5rem;
-}
-
-h3 {
-	font-size: 1.25rem;
-	margin-top: 1.25rem;
-}
-
-.source {
-	border: 1px solid #ddd;
-	border-radius: 3px;
-	padding: 1.5em;
-	word-break: break-all;
-}
-
-.callout {
-	border-radius: 3px;
-	padding: 1rem;
-}
-
-figure {
-	margin: 1.25em 0;
-	page-break-inside: avoid;
-}
-
-figcaption {
-	opacity: 0.5;
-	font-size: 85%;
-	margin-top: 0.5em;
-}
-
-mark {
-	background-color: transparent;
-}
-
-.indented {
-	padding-left: 1.5em;
-}
-
-hr {
-	background: transparent;
-	display: block;
-	width: 100%;
-	height: 1px;
-	visibility: visible;
-	border: none;
-	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
-}
-
-img {
-	max-width: 100%;
-}
-
-@media only print {
-	img {
-		max-height: 100vh;
-		object-fit: contain;
-	}
-}
-
-@page {
-	margin: 1in;
-}
-
-.collection-content {
-	font-size: 0.875rem;
-}
-
-.column-list {
-	display: flex;
-	justify-content: space-between;
-}
-
-.column {
-	padding: 0 1em;
-}
-
-.column:first-child {
-	padding-left: 0;
-}
-
-.column:last-child {
-	padding-right: 0;
-}
-
-.table_of_contents-item {
-	display: block;
-	font-size: 0.875rem;
-	line-height: 1.3;
-	padding: 0.125rem;
-}
-
-.table_of_contents-indent-1 {
-	margin-left: 1.5rem;
-}
-
-.table_of_contents-indent-2 {
-	margin-left: 3rem;
-}
-
-.table_of_contents-indent-3 {
-	margin-left: 4.5rem;
-}
-
-.table_of_contents-link {
-	text-decoration: none;
-	opacity: 0.7;
-	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
-}
-
-table,
-th,
-td {
-	border: 1px solid rgba(55, 53, 47, 0.09);
-	border-collapse: collapse;
-}
-
-table {
-	border-left: none;
-	border-right: none;
-}
-
-th,
-td {
-	font-weight: normal;
-	padding: 0.25em 0.5em;
-	line-height: 1.5;
-	min-height: 1.5em;
-	text-align: left;
-}
-
-th {
-	color: rgba(55, 53, 47, 0.6);
-}
-
-ol,
-ul {
-	margin: 0;
-	margin-block-start: 0.6em;
-	margin-block-end: 0.6em;
-}
-
-li > ol:first-child,
-li > ul:first-child {
-	margin-block-start: 0.6em;
-}
-
-ul > li {
-	list-style: disc;
-}
-
-ul.to-do-list {
-	padding-inline-start: 0;
-}
-
-ul.to-do-list > li {
-	list-style: none;
-}
-
-.to-do-children-checked {
-	text-decoration: line-through;
-	opacity: 0.375;
-}
-
-ul.toggle > li {
-	list-style: none;
-}
-
-ul {
-	padding-inline-start: 1.7em;
-}
-
-ul > li {
-	padding-left: 0.1em;
-}
-
-ol {
-	padding-inline-start: 1.6em;
-}
-
-ol > li {
-	padding-left: 0.2em;
-}
-
-.mono ol {
-	padding-inline-start: 2em;
-}
-
-.mono ol > li {
-	text-indent: -0.4em;
-}
-
-.toggle {
-	padding-inline-start: 0em;
-	list-style-type: none;
-}
-
-/* Indent toggle children */
-.toggle > li > details {
-	padding-left: 1.7em;
-}
-
-.toggle > li > details > summary {
-	margin-left: -1.1em;
-}
-
-.selected-value {
-	display: inline-block;
-	padding: 0 0.5em;
-	background: rgba(206, 205, 202, 0.5);
-	border-radius: 3px;
-	margin-right: 0.5em;
-	margin-top: 0.3em;
-	margin-bottom: 0.3em;
-	white-space: nowrap;
-}
-
-.collection-title {
-	display: inline-block;
-	margin-right: 1em;
-}
-
-.page-description {
-    margin-bottom: 2em;
-}
-
-.simple-table {
-	margin-top: 1em;
-	font-size: 0.875rem;
-	empty-cells: show;
-}
-.simple-table td {
-	height: 29px;
-	min-width: 120px;
-}
-
-.simple-table th {
-	height: 29px;
-	min-width: 120px;
-}
-
-.simple-table-header-color {
-	background: rgb(247, 246, 243);
-	color: black;
-}
-.simple-table-header {
-	font-weight: 500;
-}
-
-time {
-	opacity: 0.5;
-}
-
-.icon {
-	display: inline-block;
-	max-width: 1.2em;
-	max-height: 1.2em;
-	text-decoration: none;
-	vertical-align: text-bottom;
-	margin-right: 0.5em;
-}
-
-img.icon {
-	border-radius: 3px;
-}
-
-.user-icon {
-	width: 1.5em;
-	height: 1.5em;
-	border-radius: 100%;
-	margin-right: 0.5rem;
-}
-
-.user-icon-inner {
-	font-size: 0.8em;
-}
-
-.text-icon {
-	border: 1px solid #000;
-	text-align: center;
-}
-
-.page-cover-image {
-	display: block;
-	object-fit: cover;
-	width: 100%;
-	max-height: 30vh;
-}
-
-.page-header-icon {
-	font-size: 3rem;
-	margin-bottom: 1rem;
-}
-
-.page-header-icon-with-cover {
-	margin-top: -0.72em;
-	margin-left: 0.07em;
-}
-
-.page-header-icon img {
-	border-radius: 3px;
-}
-
-.link-to-page {
-	margin: 1em 0;
-	padding: 0;
-	border: none;
-	font-weight: 500;
-}
-
-p > .user {
-	opacity: 0.5;
-}
-
-td > .user,
-td > time {
-	white-space: nowrap;
-}
-
-input[type="checkbox"] {
-	transform: scale(1.5);
-	margin-right: 0.6em;
-	vertical-align: middle;
-}
-
-p {
-	margin-top: 0.5em;
-	margin-bottom: 0.5em;
-}
-
-.image {
-	border: none;
-	margin: 1.5em 0;
-	padding: 0;
-	border-radius: 0;
-	text-align: center;
-}
-
-.code,
-code {
-	background: rgba(135, 131, 120, 0.15);
-	border-radius: 3px;
-	padding: 0.2em 0.4em;
-	border-radius: 3px;
-	font-size: 85%;
-	tab-size: 2;
-}
-
-code {
-	color: #eb5757;
-}
-
-.code {
-	padding: 1.5em 1em;
-}
-
-.code-wrap {
-	white-space: pre-wrap;
-	word-break: break-all;
-}
-
-.code > code {
-	background: none;
-	padding: 0;
-	font-size: 100%;
-	color: inherit;
-}
-
-blockquote {
-	font-size: 1.25em;
-	margin: 1em 0;
-	padding-left: 1em;
-	border-left: 3px solid rgb(55, 53, 47);
-}
-
-.bookmark {
-	text-decoration: none;
-	max-height: 8em;
-	padding: 0;
-	display: flex;
-	width: 100%;
-	align-items: stretch;
-}
-
-.bookmark-title {
-	font-size: 0.85em;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	height: 1.75em;
-	white-space: nowrap;
-}
-
-.bookmark-text {
-	display: flex;
-	flex-direction: column;
-}
-
-.bookmark-info {
-	flex: 4 1 180px;
-	padding: 12px 14px 14px;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-}
-
-.bookmark-image {
-	width: 33%;
-	flex: 1 1 180px;
-	display: block;
-	position: relative;
-	object-fit: cover;
-	border-radius: 1px;
-}
-
-.bookmark-description {
-	color: rgba(55, 53, 47, 0.6);
-	font-size: 0.75em;
-	overflow: hidden;
-	max-height: 4.5em;
-	word-break: break-word;
-}
-
-.bookmark-href {
-	font-size: 0.75em;
-	margin-top: 0.25em;
-}
-
-.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
-.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
-.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
-.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
-.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
-.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
-.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
-.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
-.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
-.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
-.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
-.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
-.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
-.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
-.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
-.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
-.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
-.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
-.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
-.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
-.highlight-default {
-	color: rgba(55, 53, 47, 1);
-}
-.highlight-gray {
-	color: rgba(120, 119, 116, 1);
-	fill: rgba(120, 119, 116, 1);
-}
-.highlight-brown {
-	color: rgba(159, 107, 83, 1);
-	fill: rgba(159, 107, 83, 1);
-}
-.highlight-orange {
-	color: rgba(217, 115, 13, 1);
-	fill: rgba(217, 115, 13, 1);
-}
-.highlight-yellow {
-	color: rgba(203, 145, 47, 1);
-	fill: rgba(203, 145, 47, 1);
-}
-.highlight-teal {
-	color: rgba(68, 131, 97, 1);
-	fill: rgba(68, 131, 97, 1);
-}
-.highlight-blue {
-	color: rgba(51, 126, 169, 1);
-	fill: rgba(51, 126, 169, 1);
-}
-.highlight-purple {
-	color: rgba(144, 101, 176, 1);
-	fill: rgba(144, 101, 176, 1);
-}
-.highlight-pink {
-	color: rgba(193, 76, 138, 1);
-	fill: rgba(193, 76, 138, 1);
-}
-.highlight-red {
-	color: rgba(212, 76, 71, 1);
-	fill: rgba(212, 76, 71, 1);
-}
-.highlight-default_background {
-	color: rgba(55, 53, 47, 1);
-}
-.highlight-gray_background {
-	background: rgba(241, 241, 239, 1);
-}
-.highlight-brown_background {
-	background: rgba(244, 238, 238, 1);
-}
-.highlight-orange_background {
-	background: rgba(251, 236, 221, 1);
-}
-.highlight-yellow_background {
-	background: rgba(251, 243, 219, 1);
-}
-.highlight-teal_background {
-	background: rgba(237, 243, 236, 1);
-}
-.highlight-blue_background {
-	background: rgba(231, 243, 248, 1);
-}
-.highlight-purple_background {
-	background: rgba(244, 240, 247, 0.8);
-}
-.highlight-pink_background {
-	background: rgba(249, 238, 243, 0.8);
-}
-.highlight-red_background {
-	background: rgba(253, 235, 236, 1);
-}
-.block-color-default {
-	color: inherit;
-	fill: inherit;
-}
-.block-color-gray {
-	color: rgba(120, 119, 116, 1);
-	fill: rgba(120, 119, 116, 1);
-}
-.block-color-brown {
-	color: rgba(159, 107, 83, 1);
-	fill: rgba(159, 107, 83, 1);
-}
-.block-color-orange {
-	color: rgba(217, 115, 13, 1);
-	fill: rgba(217, 115, 13, 1);
-}
-.block-color-yellow {
-	color: rgba(203, 145, 47, 1);
-	fill: rgba(203, 145, 47, 1);
-}
-.block-color-teal {
-	color: rgba(68, 131, 97, 1);
-	fill: rgba(68, 131, 97, 1);
-}
-.block-color-blue {
-	color: rgba(51, 126, 169, 1);
-	fill: rgba(51, 126, 169, 1);
-}
-.block-color-purple {
-	color: rgba(144, 101, 176, 1);
-	fill: rgba(144, 101, 176, 1);
-}
-.block-color-pink {
-	color: rgba(193, 76, 138, 1);
-	fill: rgba(193, 76, 138, 1);
-}
-.block-color-red {
-	color: rgba(212, 76, 71, 1);
-	fill: rgba(212, 76, 71, 1);
-}
-.block-color-default_background {
-	color: inherit;
-	fill: inherit;
-}
-.block-color-gray_background {
-	background: rgba(241, 241, 239, 1);
-}
-.block-color-brown_background {
-	background: rgba(244, 238, 238, 1);
-}
-.block-color-orange_background {
-	background: rgba(251, 236, 221, 1);
-}
-.block-color-yellow_background {
-	background: rgba(251, 243, 219, 1);
-}
-.block-color-teal_background {
-	background: rgba(237, 243, 236, 1);
-}
-.block-color-blue_background {
-	background: rgba(231, 243, 248, 1);
-}
-.block-color-purple_background {
-	background: rgba(244, 240, 247, 0.8);
-}
-.block-color-pink_background {
-	background: rgba(249, 238, 243, 0.8);
-}
-.block-color-red_background {
-	background: rgba(253, 235, 236, 1);
-}
-.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
-.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
-.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
-.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
-.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
-.select-value-color-transparentGray { background-color: rgba(227, 226, 224, 0); }
-.select-value-color-translucentGray { background-color: rgba(0, 0, 0, 0.06); }
-.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
-.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
-.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
-.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
-.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
-.select-value-color-pageGlass { background-color: undefined; }
-.select-value-color-washGlass { background-color: undefined; }
-
-.checkbox {
-	display: inline-flex;
-	vertical-align: text-bottom;
-	width: 16;
-	height: 16;
-	background-size: 16px;
-	margin-left: 2px;
-	margin-right: 5px;
-}
-
-.checkbox-on {
-	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
-}
-
-.checkbox-off {
-	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
-}
-	
-</style></head><body><article id="40c752ee-1440-42a9-9cac-bfe50175c655" class="page sans"><header><img class="page-cover-image" src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixlib=rb-4.0.3&amp;q=85&amp;fm=jpg&amp;crop=entropy&amp;cs=srgb" style="object-position:center 45.730000000000004%"/><div class="page-header-icon page-header-icon-with-cover"></div><h1 class="page-title">Rangeesh Rajagopal</h1><p class="page-description"></p></header><div class="page-body"><blockquote id="a2f06042-db8f-44f1-b702-7e42d7aeab60" class="">Sr. Software Engineer, <em>India</em></blockquote><p id="06817dad-53a5-4812-8807-65fb151195ec" class="">Notice Period: 30 Days</p><p id="0ce7fe44-4ce6-42bc-bd69-89ba42ebf398" class=""><strong><a href="https://www.linkedin.com/in/arrangeesh/">LinkedIn</a></strong> <strong>||</strong> <strong><a href="https://github.com/Rangeeshar">Github</a></strong></p><p id="293276ae-380f-43e9-b209-3dd73ebc4535" class="">Calendar: <strong><a href="https://calendly.com/rangeesh/15min">Calendly Link</a></strong><strong> </strong></p><p id="f800a592-3877-40f0-909d-e16b797022ad" class="">Phone: +919566414541</p><p id="fa3907ef-5e08-435a-a82e-17eb5d2b6e55" class="">Tags: <strong>Good at architecture, Strong Backend skills</strong> Calendar: <strong><a href="https://calendly.com/rangeesh/15min">Calendly Link</a></strong></p><p id="e1687eb9-da3e-41c8-b918-81f88c99d3b7" class="">I am a backend-heavy full-stack Engineer with 6+ years of experience focused on building scalable APIs &amp; microservices using technologies like Python &amp; Node JS and deploying them using AWS.</p><p id="7be1d0fe-7ee6-404f-a437-bfa77d73857d" class="">I have successfully designed an algorithmic trading platform using Python with Flask that could execute trades in under 100 milliseconds while working with Shriyam Technologies.</p><p id="7813448b-468e-4efa-ae30-5fcb72acde46" class="">Also, I have architected an AWS infrastructure setup that was capable of handling 10K+ requests per second to ensure the seamless operation of systems under high traffic volumes.</p><hr id="78a3814c-af0b-4d48-bf08-0975f6260e31"/><h2 id="a6698ae0-0a41-4199-9bdd-1e77adabb7a4" class="">💻 Top Skill</h2><h3 id="5b94daf1-2141-4d71-94a5-58ac44eacef2" class="">Python</h3><p id="7890ca59-19d5-4b40-8f54-3fcd58289056" class="">5 Years of Experience</p><p id="6f393989-ff73-4680-a3d6-1153a0e3d2a8" class="">I have written a C++ extension of Python that increased the coding efficiency &amp; the execution time of the code by 20%</p><p id="8b64e6ab-c9db-4eb3-9a57-39fbbf6b5478" class="">Built a microservice using Python with Celery which could process 500K+ calculations per minute on real-time stock data.</p><p id="806d3ba9-369f-4f27-912b-60d87e935787" class="">Developed a backend API that can scale for a Neo bank that has a user base of 10K+ and handles transactions worth USD 2M for the active users.</p><h3 id="99df2f2e-1ec4-4790-b81a-8c231302cbc4" class="">Node JS</h3><p id="ee80356d-a926-408f-850f-2071a73f7c98" class="">3 Years of Experience</p><p id="6dffb8d7-2205-4d4d-bbe9-fc7cd59ebb17" class="">Built scalable APIs capable of handling 100K+ requests per second with MongoDB (database) and managed authentication using JWT.</p><p id="18995723-ded5-41c9-a3c4-a93680cbff9b" class="">Built our own machine-to-machine authentication module using Node JS with Express JS that allows access to APIs.</p><p id="8c7bcbd1-fd9e-499b-9f8e-8815e6db88ce" class="">Built chat APIs using WebSocket and elastic search that enables chat in less than 10 milliseconds.</p><h2 id="18e51bac-e9e0-4008-bfc3-056abe9d7d63" class="">Stack <strong>Experience</strong></h2><p id="af7592d6-5428-4f7a-a6a6-f589ea231faf" class=""><strong>Languages</strong>: Python, JavaScript, C++</p><p id="403d5165-60b3-4cab-a888-0cd7a2c54ae8" class=""><strong>Frontend Libraries &amp; Frameworks:</strong> React JS, Redux, Next JS, Material UI, Bootstrap</p><p id="ae98660c-20c8-424f-9eb1-574c4adf9ecf" class=""><strong>Backend Libraries &amp; Frameworks:</strong> Flask, Node JS, Express JS, Tornado, Django, WAMP-Proto</p><p id="50ecf88b-aebf-4af3-a8bb-fd7d4acba456" class=""><strong>Databases</strong>: PostgreSQL, MongoDB, Elasticsearch</p><p id="f8975660-b9cf-4c0a-aacc-522fc40d4071" class=""><strong>Testing</strong>: Pytest, locust</p><p id="b62c6663-8e03-4679-acbd-1097ea15e234" class=""><strong>Tooling:</strong> Docker, Kubernetes, CI/CD, Jenkins</p><p id="baaea983-2003-4177-82ce-36b65f315447" class=""><strong>Cloud:</strong> AWS, GCP, Netlify, Render, Vercel</p><hr id="c135a02a-7a11-40f0-9c5b-6f90c6f5aa7a"/><h2 id="3bd6af6f-dacb-4399-99e6-b95059c4199a" class="">Thoughts</h2><p id="d7c6f3b7-c60d-46df-a18c-e215127a50e6" class=""><strong>What&#x27;s the hardest problem you&#x27;ve solved?</strong></p><p id="46a7c49e-4f3e-4c3d-8d8a-d20dbe47de2d" class="">When I started to create a customized algorithmic trading platform, it had a latency of 500 milliseconds.</p><p id="a60a66a5-7a8b-4477-bfa2-16c22ce59057" class="">The stock market cannot work on such latency and we would miss out on multiple good ticks.</p><p id="27ffe6b3-56f3-430a-93ce-145816c4b7ad" class="">To tackle this issue I broke down the problem into small services and wrote an event-based action code that can now scale and has a latency of 50 milliseconds.</p><p id="08264cb2-ecc9-4a47-82bc-c58868f30791" class="">As a result, The system can now process high volumes of trades equivalent to 10K+ trades daily.</p><p id="7cc19f23-c9d3-4657-8f56-49ef4a3b1510" class=""><strong>What are you most excited to work on for the next couple of years?</strong></p><p id="38078d39-8d90-4c6d-aff1-68283f83c654" class="">I have a great passion for startups and the unique challenges they bring. Specifically, I am drawn to those who tackle real-time problems in innovative ways, and I thrive on contributing to their success.</p><p id="ffd34c58-64dc-4d2b-8a61-cb62c265753a" class="">My particular strength lies in designing scalable systems using a variety of technologies, and I am eager to be part of the decision-making process when it comes to designing such systems.</p><p id="5e574407-6289-4c78-b60c-aa59e76efca4" class="">Moreover, I am highly intrigued by the ideology behind Web 3.0 and am enthusiastic about exploring this new world. I am excited to pivot my skills toward this evolving technology and contribute to its advancement.</p><h2 id="ba1b955b-d2d5-4aa0-8b8e-b20d64dbbf37" class="">Professional Experience <em>Oct ‘18 - Present</em></h2><p id="ba610a89-1e27-471e-b1b1-a2fb7589e904" class="">Deloitte - Sr. Software Engineer</p><p id="56c50940-0563-491c-b054-df817e326e74" class="">April `24 - Present</p><p id="6a9d9f05-5829-42d9-9823-431722c6b231" class=""><em>I am working on a generative AI full-stack project that can chat on private data.</em></p><p id="11d1eccd-cd95-4748-84b6-c23a08d52e7f" class=""><strong>Tech Stack: Python, GenAI, LLM, AWS Services, Next JS, Node JS</strong></p><ul id="981309be-2884-4c64-bf0d-28567bda4b20" class="bulleted-list"><li style="list-style-type:disc">Created frontend which can chat on given documents context using react JS</li></ul><ul id="de207616-5769-412c-ad3a-04ecf3abcb68" class="bulleted-list"><li style="list-style-type:disc">Created Python backend with Langchain Framework with OpenAI LLM to power the backend service which can provide intelligent conversation with user.</li></ul><ul id="26ec3245-8a3d-465e-87c3-b7c722a29473" class="bulleted-list"><li style="list-style-type:disc">I have created a framework that could use multiple LLMs to get feedback and give a final response.</li></ul><ul id="945c3bc8-6fa5-4de9-b351-8e63cd1afcc5" class="bulleted-list"><li style="list-style-type:disc">We created RAG architecture, Reflection, and reflexion pattern of LLM to get responses for users.</li></ul><ul id="46e0d9c5-19ef-4f06-bd27-dcc7a873427d" class="bulleted-list"><li style="list-style-type:disc">Integrated prompt management and tracing using the Langfuse platform.</li></ul><ul id="a756f835-3bd9-425c-8922-a84166eac7ce" class="bulleted-list"><li style="list-style-type:disc">We created an API framework that could invoke any agent endpoint easily along with health, metrics, and invoke abstracted for your agent.</li></ul><p id="1f2228fa-5cd4-40f1-b245-869aeb49fde1" class="">
-</p><p id="bd733931-9945-4d47-9341-e74d1f81a73b" class="">Freelancing - Sr. Software Engineer</p><p id="7e0bddea-6aeb-4a61-991c-3f01cba40a02" class="">Mar ‘23 - April · 19 Months</p><p id="516517fc-114b-4704-9a0a-f278904b40ac" class=""><em>Freelanced multiple product-based startups on various domains focusing on fintech and AI across the globe.</em></p><p id="c9c719ff-42f7-44fe-b898-dc55cf9395fb" class=""><strong>Tech Stack: Python, PostgreSQL, Terraform, AWS Services, Next JS, Node JS</strong></p><ul id="d57fb89e-c00f-47db-9198-f3d62b6fe1eb" class="bulleted-list"><li style="list-style-type:disc">Scrapped and indexed lots of PDFs for feeding LLM large context from it to take derived decisions.</li></ul><ul id="f2a72442-31bb-4424-814d-3e1413ac0817" class="bulleted-list"><li style="list-style-type:disc">Engineered prompt for giving a multiple choice question with answers for users to answer based on users uploaded pdf or exam paper in multi-format.</li></ul><ul id="cc85a95b-6551-4d96-8ae3-4548febbf4a2" class="bulleted-list"><li style="list-style-type:disc">Created a Go backend for a crypto checkout platform.</li></ul><ul id="35b2d6f9-5d0a-428f-83b7-0051c0a7de75" class="bulleted-list"><li style="list-style-type:disc">Created smart contract integration on the front end using various wallets to perform actions such as selling, buying, and bidding NFTs.</li></ul><ul id="8b056759-0d7b-4975-8081-c9b46d3ba7ed" class="bulleted-list"><li style="list-style-type:disc">Added DDOS protection using Cloudflare with a country-wide blocking rule set.</li></ul><ul id="0dab5e12-6d9f-49d9-a7f8-d4b02ae8aa19" class="bulleted-list"><li style="list-style-type:disc">Consulted various companies on the architecture and design of their product.</li></ul><h3 id="3be24204-cd3f-414b-8f93-a5c93765c472" class="">Shiryam Technologies, New Delhi (India) - Sr. Software Engineer</h3><p id="5a8740c5-b211-4d27-91db-f369b4d489f8" class="">Feb ‘21 - Jun`23· 25 Months</p><p id="36523d97-d25c-4598-8317-3dde42face83" class=""><em><a href="https://www.linkedin.com/company/shiryam-technologies/">Shiryam</a></em> <em>is a modern-age product development company helping multiple startup founders build their dream technical products.</em></p><p id="6e44c33b-e1c5-484a-a1c9-6f86c382260f" class=""><strong>Tech Stack: Python, PostgreSQL, Terraform, AWS Services, React JS, Node JS</strong></p><ul id="d56c85be-f69f-4797-aa4b-d2540d0e0bc7" class="bulleted-list"><li style="list-style-type:disc">Architected an HR platform using LLM to make human-like searches for complex candidate profiles.</li></ul><ul id="d6142f17-3b06-4fec-99ed-3544e4074141" class="bulleted-list"><li style="list-style-type:disc">Led a team of 10+ developers to ensure the best GIT, code review, and testing practices which in turn tuned our team&#x27;s efficiency into closing 5 big features a week</li></ul><ul id="14e24923-2dec-4f11-96c6-1dc565f8abc3" class="bulleted-list"><li style="list-style-type:disc">Architected a custom algorithmic trading platform which had USD 1M worth of trades to date with a best profit of USD 25K per day and an average profit of USD 10K per day</li></ul><ul id="c6cd2ec8-61a0-4e96-9f74-7dc53192df08" class="bulleted-list"><li style="list-style-type:disc">Automated manual deployment process that decreased the deployment time from 20 minutes to Zero (no manual intervention required)</li></ul><ul id="ad3103b3-67ac-47da-b087-af8fd7709ca7" class="bulleted-list"><li style="list-style-type:disc">Created a Terraform script that could build a complete infra for any client in ~15 minutes including load balancer, Private/Public Network, etc. with zero manual intervention</li></ul><h3 id="8d7f86bf-7386-4024-8723-8a4e6c7a6993" class="">DeepCompute, Bangalore (India) - Software Engineer</h3><p id="32a3d9c9-1455-4c17-9c5b-74a565b23a3a" class="">Oct ‘18 - Jan ‘21 · 28 Months</p><p id="9dada556-80a3-49b5-a836-9189dbacf693" class=""><em><a href="https://www.linkedin.com/company/deepcompute/">DeepCompute</a></em> <em>was an engineering team for a medical search engine. It is a data engineering software startup helping customers maximize the productivity of their data science activities.</em></p><p id="920080e4-ac08-4d12-9e5b-5b592551cf24" class=""><strong>Tech Stack: Python, HAproxy, Hetzner Cloud, Tornado</strong></p><ul id="9e350692-f803-4c47-9b43-776e9c65d53d" class="bulleted-list"><li style="list-style-type:disc">Optimized an API that was taking 6 minutes to 300 milliseconds using web socket connections</li></ul><ul id="00bc2502-063f-4ce7-907d-cdf20b93a801" class="bulleted-list"><li style="list-style-type:disc">Automated deployments &amp; data engineering tasks for 4+ clusters that had 600+ individual machines</li></ul><ul id="09f5f4ab-2c52-4b96-8bf1-689b9f3bfd10" class="bulleted-list"><li style="list-style-type:disc">Wrote 10% of the code where we built a database and framework for making the life of our developers easy while working as a core member of a development team</li></ul><ul id="a59fcb67-bfbf-418b-ac93-4a315530f170" class="bulleted-list"><li style="list-style-type:disc">Deployed scalable Elasticsearch cluster that could ingest 1M+ documents per week and optimized the schemas to perform quicker search</li></ul><ul id="ea18b3b2-b212-46d8-8a29-00ecfb826c98" class="bulleted-list"><li style="list-style-type:disc">Created a custom data pipeline that could split, distribute, and validate 6 TB of data across 40 machines</li></ul></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Rangeesh Rajagopal | Sr. Full-Stack Engineer</title>
+	<meta name="description"
+		content="7+ years backend-focused full-stack engineer building scalable distributed systems, real-time data pipelines, and AI automation.">
+	<script src="https://cdn.tailwindcss.com"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<script>
+		tailwind.config = {
+			theme: {
+				extend: {
+					colors: {
+						primary: '#3b82f6',
+						secondary: '#8b5cf6',
+					}
+				}
+			}
+		}
+	</script>
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+		* {
+			font-family: 'Inter', sans-serif;
+		}
+
+		html {
+			scroll-behavior: smooth;
+		}
+
+		.gradient-text {
+			background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			background-clip: text;
+		}
+
+		.gradient-bg {
+			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+		}
+
+		.card-hover {
+			transition: all 0.3s ease;
+		}
+
+		.card-hover:hover {
+			transform: translateY(-5px);
+			box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+		}
+
+		.section-divider {
+			height: 1px;
+			background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.5), transparent);
+		}
+
+		.tech-badge {
+			transition: all 0.2s ease;
+		}
+
+		.tech-badge:hover {
+			transform: scale(1.05);
+		}
+
+		@keyframes fadeInUp {
+			from {
+				opacity: 0;
+				transform: translateY(30px);
+			}
+
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		.animate-fade-in-up {
+			animation: fadeInUp 0.6s ease-out;
+		}
+
+		.timeline-item::before {
+			content: '';
+			position: absolute;
+			left: -1.5rem;
+			top: 0.5rem;
+			width: 12px;
+			height: 12px;
+			border-radius: 50%;
+			background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+			border: 3px solid #1e293b;
+		}
+
+		.timeline-line {
+			position: absolute;
+			left: -1.125rem;
+			top: 1.5rem;
+			bottom: -1rem;
+			width: 2px;
+			background: linear-gradient(180deg, #3b82f6, #8b5cf6);
+		}
+
+		.profile-photo {
+			position: relative;
+			display: inline-block;
+			width: fit-content;
+			height: fit-content;
+		}
+
+		.profile-photo::before {
+			content: '';
+			position: absolute;
+			inset: -4px;
+			border-radius: 50%;
+			background: linear-gradient(135deg, #3b82f6, #8b5cf6, #ec4899);
+			opacity: 0.7;
+			z-index: -1;
+			animation: rotate 3s linear infinite;
+		}
+
+		.profile-photo::after {
+			content: '';
+			position: absolute;
+			inset: -2px;
+			border-radius: 50%;
+			background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+			z-index: -1;
+		}
+
+		@keyframes rotate {
+			from {
+				transform: rotate(0deg);
+			}
+
+			to {
+				transform: rotate(360deg);
+			}
+		}
+
+		.profile-photo img {
+			object-fit: cover;
+			object-position: center;
+			image-rendering: -webkit-optimize-contrast;
+			image-rendering: auto;
+			-ms-interpolation-mode: bicubic;
+			backface-visibility: hidden;
+			-webkit-backface-visibility: hidden;
+			transform: translateZ(0);
+			-webkit-transform: translateZ(0);
+			will-change: transform;
+			box-shadow: 0 0 30px rgba(59, 130, 246, 0.4), 0 0 60px rgba(139, 92, 246, 0.2);
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+			filter: contrast(1.05) saturate(1.1);
+		}
+
+		.profile-photo:hover img {
+			transform: scale(1.05) translateZ(0);
+			-webkit-transform: scale(1.05) translateZ(0);
+			box-shadow: 0 0 40px rgba(59, 130, 246, 0.6), 0 0 80px rgba(139, 92, 246, 0.3);
+		}
+	</style>
+</head>
+
+<body class="bg-slate-900 text-gray-100">
+	<!-- Navigation -->
+	<nav class="fixed top-0 w-full bg-slate-900/80 backdrop-blur-md z-50 border-b border-slate-800">
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+			<div class="flex justify-between items-center h-16">
+				<div class="text-xl font-bold gradient-text">RR</div>
+				<div class="hidden md:flex space-x-8">
+					<a href="#about" class="hover:text-blue-400 transition-colors">About</a>
+					<a href="#experience" class="hover:text-blue-400 transition-colors">Experience</a>
+					<a href="#projects" class="hover:text-blue-400 transition-colors">Projects</a>
+					<a href="#skills" class="hover:text-blue-400 transition-colors">Skills</a>
+					<a href="#contact" class="hover:text-blue-400 transition-colors">Contact</a>
+				</div>
+				<div class="md:hidden">
+					<button id="mobile-menu-btn" class="text-gray-300 hover:text-white">
+						<i class="fas fa-bars text-xl"></i>
+					</button>
+				</div>
+			</div>
+		</div>
+		<!-- Mobile Menu -->
+		<div id="mobile-menu" class="hidden md:hidden bg-slate-800 border-t border-slate-700">
+			<div class="px-4 py-4 space-y-3">
+				<a href="#about" class="block hover:text-blue-400 transition-colors">About</a>
+				<a href="#experience" class="block hover:text-blue-400 transition-colors">Experience</a>
+				<a href="#projects" class="block hover:text-blue-400 transition-colors">Projects</a>
+				<a href="#skills" class="block hover:text-blue-400 transition-colors">Skills</a>
+				<a href="#contact" class="block hover:text-blue-400 transition-colors">Contact</a>
+			</div>
+		</div>
+	</nav>
+
+	<!-- Hero Section -->
+	<section class="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
+		<div class="max-w-7xl mx-auto">
+			<div class="text-center animate-fade-in-up">
+				<div class="mb-8 flex justify-center">
+					<div class="profile-photo">
+						<img src="LatestDP.png" srcset="LatestDP.png 1x, LatestDP.png 2x" alt="Rangeesh Rajagopal"
+							class="w-36 h-36 md:w-44 md:h-44 rounded-full border-4 border-slate-900 transition-all duration-300"
+							loading="eager" decoding="async">
+					</div>
+				</div>
+				<h1 class="text-5xl md:text-6xl font-bold mb-4">
+					<span class="gradient-text">Rangeesh Rajagopal</span>
+				</h1>
+				<p class="text-2xl md:text-3xl text-gray-300 mb-6">Sr. Full-Stack Engineer</p>
+				<p class="text-lg text-gray-400 max-w-3xl mx-auto mb-8">
+					7+ years backend-focused full-stack engineer building scalable distributed systems,
+					real-time data pipelines, and AI automation. Owns end-to-end delivery across backend
+					(Python, FastAPI, Node.js), frontend (React, Next.js), and cloud (AWS).
+				</p>
+				<div class="flex flex-wrap justify-center gap-4 text-gray-300 mb-8">
+					<a href="https://www.linkedin.com/in/arrangeesh" target="_blank"
+						class="hover:text-blue-400 transition-colors">
+						<i class="fab fa-linkedin text-2xl"></i>
+					</a>
+					<a href="https://github.com/Rangeeshar" target="_blank" class="hover:text-blue-400 transition-colors">
+						<i class="fab fa-github text-2xl"></i>
+					</a>
+					<a href="mailto:rangees28@gmail.com" class="hover:text-blue-400 transition-colors">
+						<i class="fas fa-envelope text-2xl"></i>
+					</a>
+				</div>
+				<div class="flex flex-col sm:flex-row gap-4 justify-center">
+					<a href="#contact"
+						class="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg font-semibold hover:shadow-lg transition-all transform hover:scale-105">
+						Get In Touch
+					</a>
+					<a href="#projects"
+						class="px-8 py-3 border-2 border-blue-500 rounded-lg font-semibold hover:bg-blue-500/10 transition-all">
+						View Projects
+					</a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- About Section -->
+	<section id="about" class="py-20 px-4 sm:px-6 lg:px-8 bg-slate-800/50">
+		<div class="max-w-7xl mx-auto">
+			<h2 class="text-4xl font-bold mb-12 text-center">
+				<span class="gradient-text">Professional Summary</span>
+			</h2>
+			<div class="max-w-4xl mx-auto">
+				<div class="bg-slate-800 rounded-xl p-8 card-hover border border-slate-700">
+					<p class="text-lg text-gray-300 leading-relaxed mb-6">
+						Designs resilient, low-latency services handling <span class="text-blue-400 font-semibold">10K–100K+
+							RPS</span>.
+						Expert in building scalable distributed systems with expertise in Python, FastAPI, Node.js, React, and
+						Next.js.
+					</p>
+					<p class="text-lg text-gray-300 leading-relaxed">
+						Passionate about AI automation, real-time data pipelines, and cloud infrastructure.
+						Proven track record of optimizing systems for performance, reliability, and scalability.
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Experience Section -->
+	<section id="experience" class="py-20 px-4 sm:px-6 lg:px-8">
+		<div class="max-w-7xl mx-auto">
+			<h2 class="text-4xl font-bold mb-12 text-center">
+				<span class="gradient-text">Professional Experience</span>
+			</h2>
+
+			<div class="space-y-12">
+				<!-- Jupitrr AI -->
+				<div class="relative pl-8 md:pl-12">
+					<div class="timeline-line"></div>
+					<div class="timeline-item relative bg-slate-800 rounded-xl p-6 md:p-8 card-hover border border-slate-700">
+						<div class="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
+							<div>
+								<h3 class="text-2xl font-bold text-white mb-2">Sr. Full-Stack Engineer</h3>
+								<p class="text-blue-400 font-semibold text-lg">Jupitrr AI | Chennai</p>
+							</div>
+							<span class="text-gray-400 mt-2 md:mt-0">Oct 2024 - Dec 2025</span>
+						</div>
+						<ul class="space-y-3 text-gray-300">
+							<li class="flex items-start">
+								<i class="fas fa-check-circle text-green-400 mt-1 mr-3 flex-shrink-0"></i>
+								<span>Led end-to-end development of AI-assisted media editing workflows, contributing to <span
+										class="text-blue-400 font-semibold">70% uplift in user adoption</span></span>
+							</li>
+							<li class="flex items-start">
+								<i class="fas fa-check-circle text-green-400 mt-1 mr-3 flex-shrink-0"></i>
+								<span>Optimized AI-assisted editor pipeline, cutting processing time by <span
+										class="text-blue-400 font-semibold">55%</span> and reducing CPU usage by <span
+										class="text-blue-400 font-semibold">30%</span></span>
+							</li>
+							<li class="flex items-start">
+								<i class="fas fa-check-circle text-green-400 mt-1 mr-3 flex-shrink-0"></i>
+								<span>Spearheaded caching and async tasks, enabling system to handle peak loads with <span
+										class="text-blue-400 font-semibold">99.95% uptime</span> during product launch events</span>
+							</li>
+							<li class="flex items-start">
+								<i class="fas fa-check-circle text-green-400 mt-1 mr-3 flex-shrink-0"></i>
+								<span>Implemented automated regression suite and linting, increasing release stability with <span
+										class="text-blue-400 font-semibold">98% test success rate</span></span>
+							</li>
+						</ul>
+						<div class="mt-4 flex flex-wrap gap-2">
+							<span class="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-sm">Python</span>
+							<span class="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-sm">FastAPI</span>
+							<span class="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-sm">React</span>
+							<span class="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-sm">Node.js</span>
+							<span class="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-sm">TypeScript</span>
+							<span class="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-sm">OpenAI</span>
+							<span class="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-sm">AWS Bedrock</span>
+							<span class="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-sm">Redis</span>
+							<span class="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-sm">PostgreSQL</span>
+						</div>
+					</div>
+				</div>
+
+				<!-- Deloitte -->
+				<div class="relative pl-8 md:pl-12">
+					<div class="timeline-line"></div>
+					<div class="timeline-item relative bg-slate-800 rounded-xl p-6 md:p-8 card-hover border border-slate-700">
+						<div class="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
+							<div>
+								<h3 class="text-2xl font-bold text-white mb-2">Sr. Software Engineer</h3>
+								<p class="text-blue-400 font-semibold text-lg">Deloitte | Chennai</p>
+							</div>
+							<span class="text-gray-400 mt-2 md:mt-0">Mar 2024 - Oct 2024</span>
+						</div>
+						<ul class="space-y-3 text-gray-300">
+							<li class="flex items-start">
+								<i class="fas fa-check-circle text-green-400 mt-1 mr-3 flex-shrink-0"></i>
+								<span>Designed multi-agent enterprise conversational systems using Python, React, and LangChain to
+									improve document discoverability</span>
+							</li>
+							<li class="flex items-start">
+								<i class="fas fa-check-circle text-green-400 mt-1 mr-3 flex-shrink-0"></i>
+								<span>Implemented reflection and consensus strategies to enhance LLM answer quality, reducing variance
+									by <span class="text-blue-400 font-semibold">25%</span></span>
+							</li>
+							<li class="flex items-start">
+								<i class="fas fa-check-circle text-green-400 mt-1 mr-3 flex-shrink-0"></i>
+								<span>Integrated observability with Langfuse for evaluation, tracing, and faster debugging, cutting
+									incident triage by <span class="text-blue-400 font-semibold">5 hours per week</span></span>
+							</li>
+							<li class="flex items-start">
+								<i class="fas fa-check-circle text-green-400 mt-1 mr-3 flex-shrink-0"></i>
+								<span>Architected and deployed auto scaling to handle a <span class="text-blue-400 font-semibold">3x
+										peak load</span>, delivering <span class="text-blue-400 font-semibold">99.95% uptime</span></span>
+							</li>
+						</ul>
+						<div class="mt-4 flex flex-wrap gap-2">
+							<span class="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm">Python</span>
+							<span class="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm">React</span>
+							<span class="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm">LangChain</span>
+							<span class="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm">Langfuse</span>
+						</div>
+					</div>
+				</div>
+
+				<!-- Metafire Financial -->
+				<div class="relative pl-8 md:pl-12">
+					<div class="timeline-line"></div>
+					<div class="timeline-item relative bg-slate-800 rounded-xl p-6 md:p-8 card-hover border border-slate-700">
+						<div class="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
+							<div>
+								<h3 class="text-2xl font-bold text-white mb-2">Sr. Full Stack Engineer</h3>
+								<p class="text-blue-400 font-semibold text-lg">Metafire Financial | Chennai</p>
+							</div>
+							<span class="text-gray-400 mt-2 md:mt-0">Mar 2023 - Mar 2024</span>
+						</div>
+						<ul class="space-y-3 text-gray-300">
+							<li class="flex items-start">
+								<i class="fas fa-check-circle text-green-400 mt-1 mr-3 flex-shrink-0"></i>
+								<span>Reduced API response time <span class="text-blue-400 font-semibold">42%</span>, from 850ms to
+									490ms, enabling faster user interactions and <span class="text-blue-400 font-semibold">1.2x increase
+										in throughput</span></span>
+							</li>
+							<li class="flex items-start">
+								<i class="fas fa-check-circle text-green-400 mt-1 mr-3 flex-shrink-0"></i>
+								<span>Enhanced onboarding flow reduced setup time by <span
+										class="text-blue-400 font-semibold">40%</span> and increased new accounts by <span
+										class="text-blue-400 font-semibold">2,000 in 3 months</span></span>
+							</li>
+							<li class="flex items-start">
+								<i class="fas fa-check-circle text-green-400 mt-1 mr-3 flex-shrink-0"></i>
+								<span>Scaled deployment configuration to support peak loads and maintained <span
+										class="text-blue-400 font-semibold">99.95% uptime</span> during audits and seasonal spikes</span>
+							</li>
+							<li class="flex items-start">
+								<i class="fas fa-check-circle text-green-400 mt-1 mr-3 flex-shrink-0"></i>
+								<span>Expanded test coverage from <span class="text-blue-400 font-semibold">54% to 88%</span>, reducing
+									production defects by <span class="text-blue-400 font-semibold">62%</span></span>
+							</li>
+						</ul>
+						<div class="mt-4 flex flex-wrap gap-2">
+							<span class="px-3 py-1 bg-green-500/20 text-green-300 rounded-full text-sm">TypeScript</span>
+							<span class="px-3 py-1 bg-green-500/20 text-green-300 rounded-full text-sm">Node.js</span>
+							<span class="px-3 py-1 bg-green-500/20 text-green-300 rounded-full text-sm">Express</span>
+							<span class="px-3 py-1 bg-green-500/20 text-green-300 rounded-full text-sm">Redis</span>
+							<span class="px-3 py-1 bg-green-500/20 text-green-300 rounded-full text-sm">MongoDB</span>
+							<span class="px-3 py-1 bg-green-500/20 text-green-300 rounded-full text-sm">AWS</span>
+						</div>
+					</div>
+				</div>
+
+				<!-- Shiryam Technologies -->
+				<div class="relative pl-8 md:pl-12">
+					<div class="timeline-item relative bg-slate-800 rounded-xl p-6 md:p-8 card-hover border border-slate-700">
+						<div class="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
+							<div>
+								<h3 class="text-2xl font-bold text-white mb-2">Sr. Software Engineer</h3>
+								<p class="text-blue-400 font-semibold text-lg">Shiryam Technologies | Delhi</p>
+							</div>
+							<span class="text-gray-400 mt-2 md:mt-0">Feb 2021 - Mar 2023</span>
+						</div>
+						<ul class="space-y-3 text-gray-300">
+							<li class="flex items-start">
+								<i class="fas fa-check-circle text-green-400 mt-1 mr-3 flex-shrink-0"></i>
+								<span>Led <span class="text-blue-400 font-semibold">10+ engineers</span>; instituted architecture and
+									review practices to raise code quality and delivery consistency</span>
+							</li>
+							<li class="flex items-start">
+								<i class="fas fa-check-circle text-green-400 mt-1 mr-3 flex-shrink-0"></i>
+								<span>Built an algorithmic trading platform handling <span class="text-blue-400 font-semibold">10K+
+										trades/day</span>, improving throughput and stability</span>
+							</li>
+							<li class="flex items-start">
+								<i class="fas fa-check-circle text-green-400 mt-1 mr-3 flex-shrink-0"></i>
+								<span>Automated infrastructure provisioning with Terraform <span class="text-blue-400 font-semibold">20
+										min to 0 min</span>, accelerating deployments</span>
+							</li>
+							<li class="flex items-start">
+								<i class="fas fa-check-circle text-green-400 mt-1 mr-3 flex-shrink-0"></i>
+								<span>Achieved <span class="text-blue-400 font-semibold">$25K/day peak profit</span> and materially
+									increased release velocity through disciplined delivery practices</span>
+							</li>
+						</ul>
+						<div class="mt-4 flex flex-wrap gap-2">
+							<span class="px-3 py-1 bg-yellow-500/20 text-yellow-300 rounded-full text-sm">Terraform</span>
+							<span class="px-3 py-1 bg-yellow-500/20 text-yellow-300 rounded-full text-sm">Python</span>
+							<span class="px-3 py-1 bg-yellow-500/20 text-yellow-300 rounded-full text-sm">AWS</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Projects Section -->
+	<section id="projects" class="py-20 px-4 sm:px-6 lg:px-8 bg-slate-800/50">
+		<div class="max-w-7xl mx-auto">
+			<h2 class="text-4xl font-bold mb-12 text-center">
+				<span class="gradient-text">Featured Projects</span>
+			</h2>
+
+			<div class="grid md:grid-cols-2 gap-8">
+				<!-- Semantic Video Search -->
+				<div class="bg-slate-800 rounded-xl p-8 card-hover border border-slate-700">
+					<div class="mb-4">
+						<i class="fas fa-search text-4xl text-orange-400 mb-4"></i>
+						<h3 class="text-2xl font-bold text-white mb-2">Semantic Video Search</h3>
+						<p class="text-orange-400 font-semibold">AI-Powered Video Search Engine</p>
+					</div>
+					<p class="text-gray-300 mb-4">
+						A semantic video search engine powered by ChromaDB that enables natural language search across video
+						content. Search anything in your videos using conversational queries and instantly jump to relevant moments.
+					</p>
+					<ul class="space-y-2 text-gray-300 mb-4">
+						<li class="flex items-start">
+							<i class="fas fa-check text-green-400 mt-1 mr-2 flex-shrink-0"></i>
+							<span>Natural language semantic search using ChromaDB vector embeddings</span>
+						</li>
+						<li class="flex items-start">
+							<i class="fas fa-check text-green-400 mt-1 mr-2 flex-shrink-0"></i>
+							<span>Deepgram integration for accurate transcription with word-level timestamps</span>
+						</li>
+						<li class="flex items-start">
+							<i class="fas fa-check text-green-400 mt-1 mr-2 flex-shrink-0"></i>
+							<span>Interactive transcript with clickable words and real-time video sync</span>
+						</li>
+						<li class="flex items-start">
+							<i class="fas fa-check text-green-400 mt-1 mr-2 flex-shrink-0"></i>
+							<span>Timestamp-based collaborative comments for video editing workflows</span>
+						</li>
+					</ul>
+					<a href="https://github.com/Rangeeshar/semantic-video-search" target="_blank"
+						class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-orange-600 to-red-600 rounded-lg font-semibold hover:shadow-lg transition-all transform hover:scale-105 text-white">
+						View on GitHub
+						<i class="fas fa-external-link-alt ml-2"></i>
+					</a>
+				</div>
+
+				<!-- Discount Store -->
+				<div class="bg-slate-800 rounded-xl p-8 card-hover border border-slate-700">
+					<div class="mb-4">
+						<i class="fas fa-tags text-4xl text-pink-400 mb-4"></i>
+						<h3 class="text-2xl font-bold text-white mb-2">Discount Store</h3>
+						<p class="text-pink-400 font-semibold">Shopify Volume Discount App</p>
+					</div>
+					<p class="text-gray-300 mb-4">
+						A custom Shopify app that allows store owners to configure volume discounts (e.g., "Buy 2, get 10% off")
+						with a complete admin panel, custom discount function, and theme app extensions.
+					</p>
+					<ul class="space-y-2 text-gray-300 mb-4">
+						<li class="flex items-start">
+							<i class="fas fa-check text-green-400 mt-1 mr-2 flex-shrink-0"></i>
+							<span>Admin panel with product picker for configuring volume discounts</span>
+						</li>
+						<li class="flex items-start">
+							<i class="fas fa-check text-green-400 mt-1 mr-2 flex-shrink-0"></i>
+							<span>Custom Shopify discount function that automatically applies discounts at checkout</span>
+						</li>
+						<li class="flex items-start">
+							<i class="fas fa-check text-green-400 mt-1 mr-2 flex-shrink-0"></i>
+							<span>Theme app extensions with customizable discount messages on product pages</span>
+						</li>
+						<li class="flex items-start">
+							<i class="fas fa-check text-green-400 mt-1 mr-2 flex-shrink-0"></i>
+							<span>Full-stack implementation using React Router and Shopify Functions</span>
+						</li>
+					</ul>
+					<a href="https://github.com/Rangeeshar/discount-store" target="_blank"
+						class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-pink-600 to-rose-600 rounded-lg font-semibold hover:shadow-lg transition-all transform hover:scale-105 text-white">
+						View on GitHub
+						<i class="fas fa-external-link-alt ml-2"></i>
+					</a>
+				</div>
+
+				<!-- Gmail Actions -->
+				<div class="bg-slate-800 rounded-xl p-8 card-hover border border-slate-700">
+					<div class="mb-4">
+						<i class="fas fa-envelope text-4xl text-blue-400 mb-4"></i>
+						<h3 class="text-2xl font-bold text-white mb-2">Gmail Actions</h3>
+						<p class="text-blue-400 font-semibold">Rule-Based Email Processing Engine</p>
+					</div>
+					<p class="text-gray-300 mb-4">
+						A Gmail rule processor engine that connects with your email account and processes emails based on
+						configurable JSON rules. Automate email management with flexible conditions and actions.
+					</p>
+					<ul class="space-y-2 text-gray-300 mb-4">
+						<li class="flex items-start">
+							<i class="fas fa-check text-green-400 mt-1 mr-2 flex-shrink-0"></i>
+							<span>Gmail API integration with OAuth2 authentication for secure email access</span>
+						</li>
+						<li class="flex items-start">
+							<i class="fas fa-check text-green-400 mt-1 mr-2 flex-shrink-0"></i>
+							<span>SQLite database storage for efficient email querying and management</span>
+						</li>
+						<li class="flex items-start">
+							<i class="fas fa-check text-green-400 mt-1 mr-2 flex-shrink-0"></i>
+							<span>Flexible rule engine supporting multiple conditions (From, To, Subject, Date, Message)</span>
+						</li>
+						<li class="flex items-start">
+							<i class="fas fa-check text-green-400 mt-1 mr-2 flex-shrink-0"></i>
+							<span>Automated actions: mark as read/unread, move messages to labels, and more</span>
+						</li>
+					</ul>
+					<a href="https://github.com/Rangeeshar/gmail-actions" target="_blank"
+						class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg font-semibold hover:shadow-lg transition-all transform hover:scale-105 text-white">
+						View on GitHub
+						<i class="fas fa-external-link-alt ml-2"></i>
+					</a>
+				</div>
+
+				<!-- Nurexus -->
+				<div class="bg-slate-800 rounded-xl p-8 card-hover border border-slate-700">
+					<div class="mb-4">
+						<i class="fas fa-book-medical text-4xl text-cyan-400 mb-4"></i>
+						<h3 class="text-2xl font-bold text-white mb-2">Nurexus</h3>
+						<p class="text-cyan-400 font-semibold">Journal of MedVerse Research & Practice</p>
+					</div>
+					<p class="text-gray-300 mb-4">
+						A medical research journal platform that enables researchers, faculty, residents, and students to
+						showcase their research, foster collaboration, and access peer-reviewed articles in the medical field.
+					</p>
+					<ul class="space-y-2 text-gray-300 mb-4">
+						<li class="flex items-start">
+							<i class="fas fa-check text-green-400 mt-1 mr-2 flex-shrink-0"></i>
+							<span>Searchable journal article database with advanced filtering capabilities</span>
+						</li>
+						<li class="flex items-start">
+							<i class="fas fa-check text-green-400 mt-1 mr-2 flex-shrink-0"></i>
+							<span>Article submission system for researchers to publish their work</span>
+						</li>
+						<li class="flex items-start">
+							<i class="fas fa-check text-green-400 mt-1 mr-2 flex-shrink-0"></i>
+							<span>Platform for showcasing research to a broad medical audience</span>
+						</li>
+						<li class="flex items-start">
+							<i class="fas fa-check text-green-400 mt-1 mr-2 flex-shrink-0"></i>
+							<span>Fosters engagement and collaboration among medical professionals</span>
+						</li>
+					</ul>
+					<a href="https://www.nurexus.com/" target="_blank"
+						class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-cyan-600 to-blue-600 rounded-lg font-semibold hover:shadow-lg transition-all transform hover:scale-105 text-white">
+						Visit Nurexus
+						<i class="fas fa-external-link-alt ml-2"></i>
+					</a>
+				</div>
+
+				<!-- SplitBiller -->
+				<div class="bg-slate-800 rounded-xl p-8 card-hover border border-slate-700">
+					<div class="mb-4">
+						<i class="fas fa-calculator text-4xl text-green-400 mb-4"></i>
+						<h3 class="text-2xl font-bold text-white mb-2">SplitBiller</h3>
+						<p class="text-green-400 font-semibold">Free Expense Splitter</p>
+					</div>
+					<p class="text-gray-300 mb-4">
+						A free alternative to Splitwise that splits group expenses instantly. No signup, no account,
+						just quick and easy expense splitting with complete privacy.
+					</p>
+					<ul class="space-y-2 text-gray-300 mb-4">
+						<li class="flex items-start">
+							<i class="fas fa-check text-green-400 mt-1 mr-2 flex-shrink-0"></i>
+							<span>No login or signup required — works entirely in your browser</span>
+						</li>
+						<li class="flex items-start">
+							<i class="fas fa-check text-green-400 mt-1 mr-2 flex-shrink-0"></i>
+							<span>Privacy-first — all calculations run locally, nothing is stored</span>
+						</li>
+						<li class="flex items-start">
+							<i class="fas fa-check text-green-400 mt-1 mr-2 flex-shrink-0"></i>
+							<span>Mobile-friendly and lightweight for instant results</span>
+						</li>
+						<li class="flex items-start">
+							<i class="fas fa-check text-green-400 mt-1 mr-2 flex-shrink-0"></i>
+							<span>Perfect for restaurants, trips, roommates, and one-time expenses</span>
+						</li>
+					</ul>
+					<a href="https://splitbiller.com/" target="_blank"
+						class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-600 rounded-lg font-semibold hover:shadow-lg transition-all transform hover:scale-105 text-white">
+						Visit SplitBiller
+						<i class="fas fa-external-link-alt ml-2"></i>
+					</a>
+				</div>
+
+				<!-- AI-Assisted Media Editing Platform -->
+				<div class="bg-slate-800 rounded-xl p-8 card-hover border border-slate-700">
+					<div class="mb-4">
+						<i class="fas fa-video text-4xl text-blue-400 mb-4"></i>
+						<h3 class="text-2xl font-bold text-white mb-2">AI-Assisted Media Editing Platform</h3>
+						<p class="text-blue-400 font-semibold">Jupitrr AI</p>
+					</div>
+					<p class="text-gray-300 mb-4">
+						Designed and implemented AI-assisted media editing workflows with high-throughput pipelines for ingestion,
+						transcription, segmentation, rendering, and export.
+					</p>
+					<ul class="space-y-2 text-gray-300 mb-4">
+						<li class="flex items-start">
+							<i class="fas fa-check text-green-400 mt-1 mr-2 flex-shrink-0"></i>
+							<span>Architected high-throughput ingestion, transcription, segmentation, rendering, and export
+								pipelines</span>
+						</li>
+						<li class="flex items-start">
+							<i class="fas fa-check text-green-400 mt-1 mr-2 flex-shrink-0"></i>
+							<span>Implemented frame-accurate previews integrating HLS and animation frameworks</span>
+						</li>
+						<li class="flex items-start">
+							<i class="fas fa-check text-green-400 mt-1 mr-2 flex-shrink-0"></i>
+							<span>Rebuilt rendering/export subsystems to achieve <span class="text-blue-400 font-semibold">98%
+									reliability</span></span>
+						</li>
+						<li class="flex items-start">
+							<i class="fas fa-check text-green-400 mt-1 mr-2 flex-shrink-0"></i>
+							<span>Reduced manual editing effort by <span class="text-blue-400 font-semibold">70%</span></span>
+						</li>
+					</ul>
+				</div>
+
+				<!-- NFT APIs and Wallet Integrations -->
+				<div class="bg-slate-800 rounded-xl p-8 card-hover border border-slate-700">
+					<div class="mb-4">
+						<i class="fas fa-wallet text-4xl text-purple-400 mb-4"></i>
+						<h3 class="text-2xl font-bold text-white mb-2">NFT APIs and Wallet Integrations</h3>
+						<p class="text-purple-400 font-semibold">Metafire Financial</p>
+					</div>
+					<p class="text-gray-300 mb-4">
+						Developed Web3 features enabling secure on-chain journeys with wallet authentication,
+						robust security controls, and real-time pricing.
+					</p>
+					<ul class="space-y-2 text-gray-300 mb-4">
+						<li class="flex items-start">
+							<i class="fas fa-check text-green-400 mt-1 mr-2 flex-shrink-0"></i>
+							<span>Built end-to-end NFT APIs and wallet integrations; increased user conversion by <span
+									class="text-purple-400 font-semibold">25%</span></span>
+						</li>
+						<li class="flex items-start">
+							<i class="fas fa-check text-green-400 mt-1 mr-2 flex-shrink-0"></i>
+							<span>Strengthened platform security with DDoS mitigation, reducing malicious traffic by <span
+									class="text-purple-400 font-semibold">60%</span></span>
+						</li>
+						<li class="flex items-start">
+							<i class="fas fa-check text-green-400 mt-1 mr-2 flex-shrink-0"></i>
+							<span>Implemented wallet-based authentication to boost trust and reduce login friction</span>
+						</li>
+						<li class="flex items-start">
+							<i class="fas fa-check text-green-400 mt-1 mr-2 flex-shrink-0"></i>
+							<span>Developed real-time pricing schedulers backed by MongoDB and Redis</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Skills Section -->
+	<section id="skills" class="py-20 px-4 sm:px-6 lg:px-8">
+		<div class="max-w-7xl mx-auto">
+			<h2 class="text-4xl font-bold mb-12 text-center">
+				<span class="gradient-text">Technical Skills</span>
+			</h2>
+
+			<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+				<!-- Programming Languages -->
+				<div class="bg-slate-800 rounded-xl p-6 card-hover border border-slate-700">
+					<h3 class="text-xl font-bold text-white mb-4 flex items-center">
+						<i class="fas fa-code text-blue-400 mr-3"></i>
+						Programming Languages
+					</h3>
+					<div class="flex flex-wrap gap-2">
+						<span class="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-sm tech-badge">Python</span>
+						<span class="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-sm tech-badge">TypeScript</span>
+						<span class="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-sm tech-badge">JavaScript</span>
+					</div>
+				</div>
+
+				<!-- Frameworks -->
+				<div class="bg-slate-800 rounded-xl p-6 card-hover border border-slate-700">
+					<h3 class="text-xl font-bold text-white mb-4 flex items-center">
+						<i class="fas fa-layer-group text-purple-400 mr-3"></i>
+						Frameworks
+					</h3>
+					<div class="flex flex-wrap gap-2">
+						<span class="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm tech-badge">FastAPI</span>
+						<span class="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm tech-badge">Django</span>
+						<span class="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm tech-badge">Express</span>
+						<span class="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm tech-badge">LangChain</span>
+					</div>
+				</div>
+
+				<!-- Frontend -->
+				<div class="bg-slate-800 rounded-xl p-6 card-hover border border-slate-700">
+					<h3 class="text-xl font-bold text-white mb-4 flex items-center">
+						<i class="fas fa-paint-brush text-green-400 mr-3"></i>
+						Frontend
+					</h3>
+					<div class="flex flex-wrap gap-2">
+						<span class="px-3 py-1 bg-green-500/20 text-green-300 rounded-full text-sm tech-badge">React</span>
+						<span class="px-3 py-1 bg-green-500/20 text-green-300 rounded-full text-sm tech-badge">Next.js</span>
+						<span class="px-3 py-1 bg-green-500/20 text-green-300 rounded-full text-sm tech-badge">Tailwind</span>
+					</div>
+				</div>
+
+				<!-- Backend -->
+				<div class="bg-slate-800 rounded-xl p-6 card-hover border border-slate-700">
+					<h3 class="text-xl font-bold text-white mb-4 flex items-center">
+						<i class="fas fa-server text-yellow-400 mr-3"></i>
+						Backend
+					</h3>
+					<div class="flex flex-wrap gap-2">
+						<span class="px-3 py-1 bg-yellow-500/20 text-yellow-300 rounded-full text-sm tech-badge">Node.js</span>
+					</div>
+				</div>
+
+				<!-- Databases -->
+				<div class="bg-slate-800 rounded-xl p-6 card-hover border border-slate-700">
+					<h3 class="text-xl font-bold text-white mb-4 flex items-center">
+						<i class="fas fa-database text-red-400 mr-3"></i>
+						Databases
+					</h3>
+					<div class="flex flex-wrap gap-2">
+						<span class="px-3 py-1 bg-red-500/20 text-red-300 rounded-full text-sm tech-badge">PostgreSQL</span>
+						<span class="px-3 py-1 bg-red-500/20 text-red-300 rounded-full text-sm tech-badge">Redis</span>
+					</div>
+				</div>
+
+				<!-- Tools & Platforms -->
+				<div class="bg-slate-800 rounded-xl p-6 card-hover border border-slate-700">
+					<h3 class="text-xl font-bold text-white mb-4 flex items-center">
+						<i class="fas fa-tools text-indigo-400 mr-3"></i>
+						Tools & Platforms
+					</h3>
+					<div class="flex flex-wrap gap-2">
+						<span class="px-3 py-1 bg-indigo-500/20 text-indigo-300 rounded-full text-sm tech-badge">Terraform</span>
+						<span class="px-3 py-1 bg-indigo-500/20 text-indigo-300 rounded-full text-sm tech-badge">Git</span>
+						<span class="px-3 py-1 bg-indigo-500/20 text-indigo-300 rounded-full text-sm tech-badge">GitHub</span>
+						<span class="px-3 py-1 bg-indigo-500/20 text-indigo-300 rounded-full text-sm tech-badge">OpenAI</span>
+						<span class="px-3 py-1 bg-indigo-500/20 text-indigo-300 rounded-full text-sm tech-badge">NGINX</span>
+						<span class="px-3 py-1 bg-indigo-500/20 text-indigo-300 rounded-full text-sm tech-badge">AWS</span>
+						<span class="px-3 py-1 bg-indigo-500/20 text-indigo-300 rounded-full text-sm tech-badge">GCP</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Education Section -->
+	<section class="py-20 px-4 sm:px-6 lg:px-8 bg-slate-800/50">
+		<div class="max-w-7xl mx-auto">
+			<h2 class="text-4xl font-bold mb-12 text-center">
+				<span class="gradient-text">Education</span>
+			</h2>
+			<div class="max-w-3xl mx-auto">
+				<div class="bg-slate-800 rounded-xl p-8 card-hover border border-slate-700 text-center">
+					<i class="fas fa-graduation-cap text-5xl text-blue-400 mb-4"></i>
+					<h3 class="text-2xl font-bold text-white mb-2">Bachelor of Computer Science and Engineering</h3>
+					<p class="text-blue-400 font-semibold text-lg mb-2">SRM TRP Engineering College | Trichy</p>
+					<p class="text-gray-400">April 2018</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Contact Section -->
+	<section id="contact" class="py-20 px-4 sm:px-6 lg:px-8">
+		<div class="max-w-4xl mx-auto">
+			<h2 class="text-4xl font-bold mb-12 text-center">
+				<span class="gradient-text">Get In Touch</span>
+			</h2>
+			<div class="bg-slate-800 rounded-xl p-8 card-hover border border-slate-700">
+				<div class="grid md:grid-cols-2 gap-8">
+					<div>
+						<h3 class="text-xl font-bold text-white mb-4">Contact Information</h3>
+						<div class="space-y-4">
+							<a href="mailto:rangees28@gmail.com"
+								class="flex items-center text-gray-300 hover:text-blue-400 transition-colors">
+								<i class="fas fa-envelope text-blue-400 mr-3 text-xl"></i>
+								<span>rangees28@gmail.com</span>
+							</a>
+							<a href="tel:+919566414541" class="flex items-center text-gray-300 hover:text-blue-400 transition-colors">
+								<i class="fas fa-phone text-blue-400 mr-3 text-xl"></i>
+								<span>+91 9566414541</span>
+							</a>
+							<div class="flex items-center text-gray-300">
+								<i class="fas fa-map-marker-alt text-blue-400 mr-3 text-xl"></i>
+								<span>Chennai, India</span>
+							</div>
+						</div>
+					</div>
+					<div>
+						<h3 class="text-xl font-bold text-white mb-4">Connect With Me</h3>
+						<div class="flex space-x-4">
+							<a href="https://www.linkedin.com/in/arrangeesh" target="_blank"
+								class="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center hover:bg-blue-700 transition-colors">
+								<i class="fab fa-linkedin text-white text-xl"></i>
+							</a>
+							<a href="https://github.com/Rangeeshar" target="_blank"
+								class="w-12 h-12 bg-gray-700 rounded-lg flex items-center justify-center hover:bg-gray-600 transition-colors">
+								<i class="fab fa-github text-white text-xl"></i>
+							</a>
+							<a href="mailto:rangees28@gmail.com"
+								class="w-12 h-12 bg-red-600 rounded-lg flex items-center justify-center hover:bg-red-700 transition-colors">
+								<i class="fas fa-envelope text-white text-xl"></i>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Footer -->
+	<footer class="py-8 px-4 sm:px-6 lg:px-8 border-t border-slate-800 bg-slate-900">
+		<div class="max-w-7xl mx-auto text-center text-gray-400">
+			<p>&copy; 2025 Rangeesh Rajagopal. All rights reserved.</p>
+		</div>
+	</footer>
+
+	<!-- Mobile Menu Script -->
+	<script>
+		const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+		const mobileMenu = document.getElementById('mobile-menu');
+
+		mobileMenuBtn.addEventListener('click', () => {
+			mobileMenu.classList.toggle('hidden');
+		});
+
+		// Close mobile menu when clicking on a link
+		const mobileLinks = mobileMenu.querySelectorAll('a');
+		mobileLinks.forEach(link => {
+			link.addEventListener('click', () => {
+				mobileMenu.classList.add('hidden');
+			});
+		});
+
+		// Smooth scroll for anchor links
+		document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+			anchor.addEventListener('click', function (e) {
+				e.preventDefault();
+				const target = document.querySelector(this.getAttribute('href'));
+				if (target) {
+					target.scrollIntoView({
+						behavior: 'smooth',
+						block: 'start'
+					});
+				}
+			});
+		});
+	</script>
+</body>
+
+</html>
