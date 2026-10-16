@@ -1,106 +1,62 @@
-# Rangeesh Rajagopal - Portfolio Website
+# Rangeesh Rajagopal · Portfolio
 
-A modern, responsive portfolio website showcasing my work as a Senior Full-Stack Engineer with 7+ years of experience building scalable distributed systems, real-time data pipelines, and AI automation.
+Personal site of Rangeesh Rajagopal, Lead Software Engineer at HighLevel. Live at [rangeeshar.github.io](https://rangeeshar.github.io).
 
-## 🌐 Live Site
+The site is told as one request travelling through the kind of systems I build: the visitor is the request, each section is a hop, and the page ends with `200 OK`. The design direction is in [docs/DESIGN.md](docs/DESIGN.md).
 
-Visit the portfolio at: [https://rangeeshar.github.io](https://rangeeshar.github.io)
+## Sections
 
-## ✨ Features
+| Hop | Section | What moves |
+| --- | --- | --- |
+| `edge` | Intro | Live system topology: ambient traffic, your own request on click, cursor-bent packets |
+| `gateway` | About | Three "routes" that light up in sequence |
+| `services` | Experience | Career as a distributed-trace waterfall with span attributes |
+| `workloads` | Work | A live micro-demo per project: video search, media pipeline, Gmail rules, bill splitting |
+| `stack` | Skills | Skills by architecture layer; choosing a piece of work lights the tools it used |
+| `response` | Contact | A TCP handshake, then the connection is established |
 
-- **Responsive Design**: Fully responsive layout that works seamlessly on desktop, tablet, and mobile devices
-- **Modern UI/UX**: Clean, modern interface with smooth animations and transitions
-- **Smooth Scrolling**: Enhanced navigation with smooth scroll behavior
-- **Interactive Elements**: Hover effects, card animations, and interactive components
-- **Mobile Menu**: Collapsible navigation menu for mobile devices
-- **SEO Optimized**: Meta tags and semantic HTML for better search engine visibility
+Every scene pauses off-screen, and visitors who prefer reduced motion get each scene's final frame.
 
-## 🎨 Sections
+## Stack
 
-1. **Hero Section**: Introduction with profile photo, name, title, and social links
-2. **About**: Professional summary highlighting expertise and achievements
-3. **Experience**: Timeline of professional experience with detailed accomplishments
-4. **Projects**: Featured projects including:
-   - Semantic Video Search (AI-powered video search engine)
-   - Discount Store (Shopify volume discount app)
-   - Gmail Actions (Rule-based email processing engine)
-   - Nurexus (Medical research journal platform)
-   - SplitBiller (Free expense splitter)
-5. **Skills**: Technical skills organized by category (Languages, Frameworks, Frontend, Backend, Databases, Tools)
-6. **Education**: Academic background
-7. **Contact**: Contact information and social media links
+- [Astro](https://astro.build), static output, about 10 KB of JavaScript in total
+- Canvas 2D and plain CSS for motion, with no animation library
+- Self-hosted variable fonts: Bricolage Grotesque, Instrument Sans, JetBrains Mono
 
-## 🛠️ Technologies Used
+## Editing content
 
-- **HTML5**: Semantic markup
-- **Tailwind CSS**: Utility-first CSS framework (via CDN)
-- **Font Awesome**: Icon library for social media and UI icons
-- **JavaScript**: Vanilla JS for mobile menu and smooth scrolling
-- **Google Fonts**: Inter font family
-
-## 📁 Project Structure
+All copy lives in [`src/data/profile.ts`](src/data/profile.ts): roles, projects, skills, education and the hero facts. The sections render from it, so adding a role or project means adding one entry.
 
 ```
-.
-├── index.html              # Main HTML file
-├── latestDP.png           # Profile photo
-├── favicon.ico            # Favicon
-├── site.webmanifest       # Web app manifest
-├── apple-touch-icon.png   # Apple touch icon
-├── android-chrome-*.png   # Android Chrome icons
-├── favicon-*.png          # Various favicon sizes
-└── README.markdown        # This file
+src/
+  data/profile.ts       content
+  components/           one Astro component per section, demos/ for project demos
+  scenes/               animation logic, lazy-loaded near the viewport
+  lib/scene.ts          shared scene lifecycle (load, run while visible, reduced motion)
+  styles/global.css     design tokens, light and dark
 ```
 
-## 🚀 Getting Started
+## Development
 
-### Local Development
-
-1. Clone the repository:
+Requires Node 22.12 or newer.
 
 ```bash
-git clone https://github.com/Rangeeshar/Rangeeshar.github.io.git
-cd Rangeeshar.github.io
+npm install
+npm run dev      # local dev server at http://localhost:4321
+npm run check    # type-check
+npm run build    # static build into dist/
 ```
 
-1. Open `index.html` in your web browser, or use a local server:
+## Deployment
 
-```bash
-# Using Python
-python -m http.server 8000
+Pushing to `master` runs [.github/workflows/deploy.yml](.github/workflows/deploy.yml), which type-checks, builds and deploys `dist/` to GitHub Pages. In the repository settings, **Pages → Build and deployment → Source** must be set to **GitHub Actions**.
 
-# Using Node.js (if you have http-server installed)
-npx http-server
+## Contact
 
-# Using PHP
-php -S localhost:8000
-```
+- Email: <rangees28@gmail.com>
+- LinkedIn: [linkedin.com/in/arrangeesh](https://www.linkedin.com/in/arrangeesh)
+- GitHub: [github.com/Rangeeshar](https://github.com/Rangeeshar)
 
-1. Navigate to `http://localhost:8000` in your browser
+## License
 
-### Deployment
-
-This repository is set up for GitHub Pages. Simply push changes to the `main` branch and the site will be automatically deployed.
-
-## 🎯 Key Highlights
-
-- **7+ years** of backend-focused full-stack engineering experience
-- Expertise in **Python, FastAPI, Node.js, React, Next.js**
-- Experience building systems handling **10K–100K+ RPS**
-- Proven track record of optimizing systems for **performance, reliability, and scalability**
-- Passionate about **AI automation, real-time data pipelines, and cloud infrastructure**
-
-## 📧 Contact
-
-- **Email**: <rangees28@gmail.com>
-- **LinkedIn**: [linkedin.com/in/arrangeesh](https://www.linkedin.com/in/arrangeesh)
-- **GitHub**: [github.com/Rangeeshar](https://github.com/Rangeeshar)
-- **Location**: Chennai, India
-
-## 📄 License
-
-See [license.txt](license.txt) for details.
-
----
-
-Built with ❤️ by Rangeesh Rajagopal
+See [license.txt](license.txt).

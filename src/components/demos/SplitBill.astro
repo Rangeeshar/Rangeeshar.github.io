@@ -1,0 +1,52 @@
+---
+// Sample bill for the demo; the resting state splits it four ways.
+const TOTAL = 2400;
+const PEOPLE = 4;
+const names = ['You', 'Asha', 'Karthik', 'Meera', 'Dev', 'Nila', 'Ravi', 'Sana'];
+const inr = (paise: number) => `₹${(paise / 100).toLocaleString('en-IN', { minimumFractionDigits: paise % 100 ? 2 : 0, maximumFractionDigits: 2 })}`;
+---
+
+<div class="sb stage" data-demo="split-bill" data-total={TOTAL} data-names={JSON.stringify(names)}>
+  <div class="demo-bar"><span class="label">Sample bill · works offline</span></div>
+  <div class="sb-bill">
+    <div>
+      <p class="label">Dinner · Besant Nagar</p>
+      <p class="sb-total tnum">{inr(TOTAL * 100)}</p>
+    </div>
+    <div class="sb-people" role="group" aria-label="Number of people">
+      <button class="btn small" type="button" data-step="-1" aria-label="Remove a person">−</button>
+      <output class="mono tnum" data-count aria-live="polite">{PEOPLE} people</output>
+      <button class="btn small" type="button" data-step="1" aria-label="Add a person">+</button>
+    </div>
+  </div>
+  <div class="sb-bar" aria-hidden="true" data-bar>
+    {names.map((_, i) => <i style={`flex-grow:${i < PEOPLE ? 1 : 0}`}></i>)}
+  </div>
+  <ul class="sb-shares tnum" data-shares>
+    {names.slice(0, PEOPLE).map((n) => <li><span>{n}</span><b>{inr((TOTAL * 100) / PEOPLE)}</b></li>)}
+  </ul>
+  <p class="sb-note mono" data-note>Even split · computed in your browser · nothing stored</p>
+</div>
+
+<script>
+  import { activate } from '../../lib/scene';
+  activate('[data-demo="split-bill"]', () => import('../../scenes/demos/splitBill'));
+</script>
+
+<style is:global>
+  .sb { display: grid; gap: 16px; padding: 18px; }
+  .sb-bill { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 16px; }
+  .sb-total { font: 700 clamp(40px, 6vw, 60px)/1 var(--display); font-stretch: 80%; }
+  .sb-people { display: flex; align-items: center; gap: 10px; }
+  .sb-people output { min-width: 82px; text-align: center; font-size: 14px; }
+  .sb-bar { display: flex; gap: 3px; height: 14px; }
+  .sb-bar i { flex: 0 1 0; min-width: 0; background: var(--accent); border-radius: 2px; transition: flex-grow var(--dur-scene) var(--ease-out), background var(--dur-ui); }
+  .sb-bar i:first-child { background: var(--hot); }
+  .sb-shares { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 8px; }
+  .sb-shares li { display: grid; gap: 2px; padding: 10px 12px; background: var(--bg); border: 1px solid var(--line); border-radius: 3px; animation: sb-in 360ms var(--ease-out) both; }
+  .sb-shares li span { font-size: 13px; color: var(--muted); }
+  .sb-shares li b { font: 500 16px var(--mono); }
+  .sb-shares li:first-child b { color: var(--hot); }
+  @keyframes sb-in { from { opacity: 0; transform: translateY(6px); } }
+  .sb-note { font-size: 12px; color: var(--muted); }
+</style>

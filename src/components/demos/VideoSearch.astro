@@ -1,0 +1,66 @@
+---
+// Sample transcript for the demo. The first query is rendered as the resting state.
+const DURATION = 600;
+const lines = [
+  { t: 41, s: 'Welcome back. Today we walk through the new editor.' },
+  { t: 134, s: 'So the pricing tiers start at nine dollars a month.' },
+  { t: 252, s: 'Exports render in the background while you keep editing.' },
+  { t: 341, s: 'New users finish onboarding in under a minute.' },
+  { t: 483, s: 'Watch: I type a question and it jumps right there.' },
+];
+const queries = [
+  { q: 'when do we discuss pricing', line: 1, words: ['pricing', 'tiers'], n: 3, ms: 82 },
+  { q: 'the part about onboarding', line: 3, words: ['onboarding'], n: 2, ms: 64 },
+  { q: 'show the search demo', line: 4, words: ['type', 'question', 'jumps'], n: 4, ms: 91 },
+  { q: 'does export block editing', line: 2, words: ['render', 'background'], n: 1, ms: 57 },
+];
+const mmss = (s: number) => `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`;
+const first = queries[0];
+const mark = (s: string, words: string[]) => words.reduce((acc, w) => acc.replace(new RegExp(`\\b(${w})\\b`, 'i'), '<mark>$1</mark>'), s);
+---
+
+<div class="vs stage" data-demo="video-search" data-config={JSON.stringify({ DURATION, lines, queries })}>
+  <div class="demo-bar"><span class="label">Sample video · 10:00</span><button class="btn small" type="button" data-next>Next query</button></div>
+  <div class="vs-q mono"><span class="vs-qtext" data-q>{first.q}</span><span class="vs-caret" aria-hidden="true"></span><span class="vs-meta tnum" data-meta>{first.n} matches · {first.ms} ms</span></div>
+  <div class="vs-player">
+    <div class="vs-frame" aria-hidden="true">
+      <div class="vs-tc mono tnum" data-tc>{mmss(lines[first.line].t)}</div>
+      <div class="vs-scrub">
+        {lines.map((l) => <i class="vs-mark" style={`left:${(l.t / DURATION) * 100}%`}></i>)}
+        <b class="vs-head" data-head style={`left:${(lines[first.line].t / DURATION) * 100}%`}></b>
+      </div>
+    </div>
+    <ol class="vs-lines" data-lines>
+      {lines.map((l, i) => (
+        <li class:list={{ on: i === first.line }}><span class="t mono tnum">{mmss(l.t)}</span><span set:html={i === first.line ? mark(l.s, first.words) : l.s} /></li>
+      ))}
+    </ol>
+  </div>
+</div>
+
+<script>
+  import { activate } from '../../lib/scene';
+  activate('[data-demo="video-search"]', () => import('../../scenes/demos/videoSearch'));
+</script>
+
+<style is:global>
+  .demo-bar { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .vs { display: grid; gap: 14px; padding: 18px; }
+  .vs-q { display: flex; gap: 10px; align-items: center; min-width: 0; border: 1px solid var(--line); background: var(--bg); padding: 11px 13px; border-radius: 3px; font-size: 14px; }
+  .vs-qtext { min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+  .vs-caret { width: 1px; height: 16px; background: var(--hot); animation: vs-blink 1s steps(1) infinite; }
+  @keyframes vs-blink { 50% { opacity: 0; } }
+  .vs-meta { margin-left: auto; color: var(--muted); font-size: 12px; white-space: nowrap; }
+  .vs-player { display: grid; gap: 14px; }
+  .vs-frame { position: relative; aspect-ratio: 16 / 8; max-width: 100%; border-radius: 3px; overflow: hidden; background: var(--screen); color: var(--screen-ink); }
+  .vs-frame::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(0deg, transparent 0 3px, color-mix(in srgb, var(--screen-ink) 6%, transparent) 3px 4px); }
+  .vs-tc { position: absolute; left: 14px; bottom: 30px; font-size: clamp(20px, 3vw, 30px); font-weight: 500; }
+  .vs-scrub { position: absolute; left: 14px; right: 14px; bottom: 14px; height: 4px; background: color-mix(in srgb, var(--screen-ink) 25%, transparent); }
+  .vs-mark { position: absolute; top: -3px; width: 2px; height: 10px; background: var(--hot); }
+  .vs-head { position: absolute; top: -5px; width: 12px; height: 14px; margin-left: -6px; border-radius: 2px; background: var(--screen-ink); transition: left 900ms var(--ease-io); }
+  .vs-lines { list-style: none; display: grid; gap: 2px; font-size: 14.5px; }
+  .vs-lines li { display: grid; grid-template-columns: 46px minmax(0, 1fr); gap: 10px; padding: 5px 8px; border-radius: 3px; transition: background var(--dur-ui); }
+  .vs-lines .t { font-size: 12px; line-height: 1.9; color: var(--muted); }
+  .vs-lines li.on { background: var(--bg); }
+  .vs-lines mark { background: none; color: var(--hot); box-shadow: inset 0 -2px 0 var(--hot); }
+</style>

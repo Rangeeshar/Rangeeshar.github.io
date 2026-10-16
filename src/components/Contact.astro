@@ -1,0 +1,75 @@
+---
+import { person } from '../data/profile';
+---
+
+<section id="response" class="hop contact">
+  <div class="wrap">
+    <header class="hop-head">
+      <span class="tag">response <span>· +47 ms</span></span>
+      <h2>Open a connection</h2>
+      <p>Hiring, collaborating, or want to talk systems? Send me an email.</p>
+    </header>
+
+    <div class="handshake mono" data-handshake aria-hidden="true">
+      <div class="hs-row"><span>you</span><span class="hs-wire" style="--i:0"><em>SYN</em><i></i></span><span>rangeesh</span></div>
+      <div class="hs-row back"><span>you</span><span class="hs-wire" style="--i:1"><em>SYN-ACK</em><i></i></span><span>rangeesh</span></div>
+      <div class="hs-row"><span>you</span><span class="hs-wire" style="--i:2"><em>ACK</em><i></i></span><span>rangeesh</span></div>
+    </div>
+
+    <div class="established">
+      <p class="hs-state mono"><span aria-hidden="true">●</span> ESTABLISHED</p>
+      <a class="contact-email" href={`mailto:${person.email}`}>{person.email}</a>
+      <div class="contact-actions">
+        <button class="btn" type="button" data-copy={person.email}>Copy email</button>
+        <a class="btn" href={person.linkedin} target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a class="btn" href={person.github} target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { onFirstView, replay } from '../lib/scene';
+  const hs = document.querySelector('[data-handshake]');
+  if (hs) onFirstView(hs, () => { replay(hs); replay(hs.nextElementSibling!); });
+
+  document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((b) => {
+    const label = b.textContent;
+    b.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(b.dataset.copy!);
+        b.textContent = 'Copied';
+      } catch {
+        b.textContent = b.dataset.copy!;
+      }
+      setTimeout(() => (b.textContent = label), 1800);
+    });
+  });
+</script>
+
+<style is:global>
+  .handshake { display: grid; gap: 12px; max-width: 640px; font-size: 13px; color: var(--muted); }
+  .hs-row { display: grid; grid-template-columns: 56px minmax(0, 1fr) 72px; gap: 12px; align-items: center; }
+  .hs-row > span:last-child { text-align: right; }
+  .hs-wire { position: relative; height: 18px; display: flex; align-items: center; justify-content: center; }
+  .hs-wire::before { content: ''; position: absolute; inset: 50% 0 auto; border-top: 1px dashed var(--line); }
+  .hs-wire em { position: relative; font-style: normal; color: var(--accent); background: var(--bg); padding-inline: 8px; }
+  .hs-wire i { position: absolute; top: 50%; left: calc(100% - 8px); width: 8px; height: 8px; margin-top: -4px; border-radius: 50%; background: var(--accent); }
+  .back .hs-wire i { left: 0; }
+  .handshake.play .hs-wire i { animation: hs-fly 650ms var(--ease-io) both; animation-delay: calc(var(--i) * 600ms); }
+  .handshake.play .back .hs-wire i { animation-name: hs-back; }
+  @keyframes hs-fly { from { left: 0; } to { left: calc(100% - 8px); } }
+  @keyframes hs-back { from { left: calc(100% - 8px); } to { left: 0; } }
+
+  .established { display: grid; gap: 18px; margin-top: 40px; padding-top: 28px; border-top: 1px solid var(--line); }
+  .established.play { animation: est-in 500ms var(--ease-out) both; animation-delay: 1850ms; }
+  @keyframes est-in { from { opacity: 0.25; transform: translateY(6px); } }
+  .hs-state { font-size: 13px; color: var(--ok); }
+  .contact-email {
+    font: 700 clamp(30px, 6.5vw, 84px)/1 var(--display); font-stretch: 76%; letter-spacing: -0.02em;
+    text-decoration: none; overflow-wrap: anywhere; width: fit-content;
+    background: linear-gradient(var(--hot), var(--hot)) left bottom / 0 3px no-repeat; transition: background-size var(--dur-ui) var(--ease-out);
+  }
+  .contact-email:hover { background-size: 100% 3px; }
+  .contact-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+</style>

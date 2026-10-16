@@ -1,0 +1,67 @@
+---
+// Sample mail and rules for the demo. The resting state shows every email already sorted.
+const rules = [
+  { id: 'finance', label: 'Finance', json: '{ "subject": { "contains_any": ["invoice", "receipt"] },\n  "then": ["mark_read", "move:Finance"] }' },
+  { id: 'news', label: 'Newsletters', json: '{ "from": { "contains_any": ["digest@", "news@"] },\n  "then": ["move:Newsletters"] }' },
+];
+const mail = [
+  { from: 'billing@cloudhost.io', subject: 'Your invoice for September', rule: 'finance' },
+  { from: 'digest@devweekly.com', subject: 'Top stories this week', rule: 'news' },
+  { from: 'priya@team.dev', subject: 'Design review at 4pm', rule: null },
+  { from: 'payments@stripe.com', subject: 'Payout receipt #4821', rule: 'finance' },
+  { from: 'news@launchboard.co', subject: "Today's top launches", rule: 'news' },
+  { from: 'arjun@team.dev', subject: 'Re: deploy checklist', rule: null },
+];
+const buckets = [...rules.map((r) => ({ id: r.id, label: r.label })), { id: 'inbox', label: 'Inbox' }];
+---
+
+<div class="gm stage" data-demo="gmail-rules" data-mail={JSON.stringify(mail)}>
+  <div class="demo-bar"><span class="label">rules.json · sample inbox</span><span class="gm-status label tnum" data-status>6 processed · 4 actions</span></div>
+  <ol class="gm-rules">
+    {rules.map((r) => (
+      <li data-rule={r.id}><span class="label">rule · {r.id}</span><pre>{r.json}</pre></li>
+    ))}
+  </ol>
+  <div class="gm-incoming" data-incoming aria-hidden="true"></div>
+  <div class="gm-buckets">
+    {buckets.map((b) => (
+      <section class="gm-bucket">
+        <h4 class="mono">{b.label} <span class="tnum" data-count={b.id}>{mail.filter((m) => (m.rule ?? 'inbox') === b.id).length}</span></h4>
+        <ul data-bucket={b.id}>
+          {mail.filter((m) => (m.rule ?? 'inbox') === b.id).map((m) => <li><b>{m.from}</b><span>{m.subject}</span></li>)}
+        </ul>
+      </section>
+    ))}
+  </div>
+</div>
+
+<script>
+  import { activate } from '../../lib/scene';
+  activate('[data-demo="gmail-rules"]', () => import('../../scenes/demos/gmailRules'));
+</script>
+
+<style is:global>
+  .gm { display: grid; gap: 14px; padding: 18px; }
+  .gm-status { letter-spacing: 0.04em; }
+  .gm-rules { list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  @media (max-width: 520px) { .gm-rules { grid-template-columns: minmax(0, 1fr); } }
+  .gm-rules li { border: 1px solid var(--line); background: var(--bg); border-radius: 3px; padding: 10px 12px; transition: border-color var(--dur-ui), box-shadow var(--dur-ui); min-width: 0; }
+  .gm-rules li.fire { border-color: var(--hot); box-shadow: 0 0 0 1px var(--hot); }
+  .gm-rules pre { margin: 6px 0 0; font: 400 11.5px/1.5 var(--mono); white-space: pre-wrap; overflow-wrap: anywhere; color: var(--ink); }
+  .gm-incoming { min-height: 54px; border: 1px dashed var(--line); border-radius: 3px; display: grid; align-items: center; padding: 8px 12px; font-size: 13.5px; }
+  .gm-incoming:empty::before { content: 'incoming · idle'; font: 400 12px var(--mono); color: var(--muted); }
+  .gm-incoming .gm-mail { display: grid; gap: 1px; animation: gm-in 360ms var(--ease-out) both; }
+  .gm-incoming .gm-verdict { font: 400 12px var(--mono); color: var(--muted); }
+  .gm-incoming .gm-verdict.hit { color: var(--hot); }
+  @keyframes gm-in { from { opacity: 0; transform: translateY(-8px); } }
+  .gm-buckets { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+  @media (max-width: 520px) { .gm-buckets { grid-template-columns: minmax(0, 1fr); } }
+  .gm-bucket { min-width: 0; }
+  .gm-bucket h4 { margin: 0 0 6px; font-size: 12.5px; font-weight: 500; display: flex; justify-content: space-between; }
+  .gm-bucket h4 span { color: var(--muted); }
+  .gm-bucket ul { list-style: none; display: grid; gap: 6px; min-height: 40px; }
+  .gm-bucket li { display: grid; gap: 1px; padding: 7px 9px; background: var(--bg); border: 1px solid var(--line); border-radius: 3px; font-size: 12.5px; line-height: 1.35; min-width: 0; }
+  .gm-bucket li b, .gm-incoming b { font: 500 11.5px var(--mono); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .gm-bucket li span { color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .gm-bucket li.new { animation: gm-in 420ms var(--ease-out) both; border-color: var(--hot); }
+</style>

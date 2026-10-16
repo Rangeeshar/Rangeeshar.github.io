@@ -1,0 +1,94 @@
+---
+import { layers, evidence, education, certifications, publications } from '../data/profile';
+---
+
+<section id="stack" class="hop">
+  <div class="wrap">
+    <header class="hop-head">
+      <span class="tag">stack <span>· +43 ms</span></span>
+      <h2>The stack, by layer</h2>
+      <p>Skills grouped by the layer they serve. Choose a piece of work to light up exactly the tools it used.</p>
+    </header>
+
+    <div class="stackmap" data-stackmap data-evidence={JSON.stringify(Object.fromEntries(evidence))}>
+      <div class="stack-evidence" role="group" aria-label="Show the tools used in">
+        {evidence.map(([label]) => <button class="btn small" type="button" aria-pressed="false" data-work={label}>{label}</button>)}
+      </div>
+      <div class="stack-layers">
+        {layers.map(([layer, skills]) => (
+          <div class="stack-layer">
+            <span class="label">{layer}</span>
+            <ul class="chips">{skills.map((s) => <li class="chip" data-skill={s}>{s}</li>)}</ul>
+          </div>
+        ))}
+      </div>
+      <p class="stack-status label" data-stack-status aria-live="polite"></p>
+    </div>
+
+    <div class="creds">
+      <div>
+        <h3>Education</h3>
+        <p>{education.degree}</p>
+        <p class="muted">{education.school}</p>
+        <p class="muted mono tnum">{education.years}</p>
+      </div>
+      <div>
+        <h3>Certifications</h3>
+        <ul>{certifications.map((c) => <li>{c}</li>)}</ul>
+      </div>
+      <div>
+        <h3>Publication</h3>
+        <ul>{publications.map((p) => <li>{p}</li>)}</ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-stackmap]');
+  if (root) {
+    const used = JSON.parse(root.dataset.evidence!) as Record<string, string[]>;
+    const buttons = [...root.querySelectorAll<HTMLButtonElement>('[data-work]')];
+    const chips = [...root.querySelectorAll<HTMLElement>('[data-skill]')];
+    const status = root.querySelector<HTMLElement>('[data-stack-status]')!;
+    let pinned: string | null = null;
+
+    const light = (work: string | null) => {
+      const set = new Set(work ? used[work] : []);
+      root.classList.toggle('filtering', !!work);
+      chips.forEach((c) => c.classList.toggle('lit', set.has(c.dataset.skill!)));
+      status.textContent = work ? `${work} · ${set.size} tools` : '';
+    };
+    buttons.forEach((b) => {
+      const work = b.dataset.work!;
+      b.addEventListener('pointerenter', () => light(work));
+      b.addEventListener('pointerleave', () => light(pinned));
+      b.addEventListener('focus', () => light(work));
+      b.addEventListener('blur', () => light(pinned));
+      b.addEventListener('click', () => {
+        pinned = pinned === work ? null : work;
+        buttons.forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.work === pinned)));
+        light(pinned ?? work);
+      });
+    });
+  }
+</script>
+
+<style is:global>
+  .stackmap { display: grid; gap: 22px; }
+  .stack-evidence { display: flex; flex-wrap: wrap; gap: 8px; }
+  .stack-evidence .btn[aria-pressed='true'] { border-color: var(--hot); color: var(--hot); }
+  .stack-layers { display: grid; border-top: 1px solid var(--line); }
+  .stack-layer { display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 16px; align-items: center; padding-block: 14px; border-bottom: 1px solid var(--line); }
+  @media (max-width: 560px) { .stack-layer { grid-template-columns: minmax(0, 1fr); gap: 8px; } }
+  .stack-layer .chip { font-size: 13.5px; padding: 6px 11px; transition: opacity var(--dur-ui), border-color var(--dur-ui), color var(--dur-ui); }
+  .stackmap.filtering .chip { opacity: 0.25; }
+  .stackmap.filtering .chip.lit { opacity: 1; border-color: var(--hot); color: var(--hot); }
+  .stack-status { min-height: 1.4em; color: var(--hot); }
+
+  .creds { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; margin-top: clamp(56px, 8vw, 96px); padding-top: 32px; border-top: 1px solid var(--line); }
+  @media (max-width: 860px) { .creds { grid-template-columns: minmax(0, 1fr); } }
+  .creds > div { display: grid; gap: 8px; align-content: start; }
+  .creds h3 { font-size: 22px; margin-bottom: 4px; }
+  .creds ul { list-style: none; display: grid; gap: 6px; }
+</style>
