@@ -49,7 +49,7 @@ npm run build    # static build into dist/
 
 ## Deployment
 
-Pushing to `main` runs [.github/workflows/deploy.yml](.github/workflows/deploy.yml), which type-checks, builds and deploys `dist/` to GitHub Pages. In the repository settings, **Pages → Build and deployment → Source** must be set to **GitHub Actions**.
+Pushing to `master` runs [.github/workflows/deploy.yml](.github/workflows/deploy.yml), which type-checks, builds and deploys `dist/` to GitHub Pages. In the repository settings, **Pages → Build and deployment → Source** must be set to **GitHub Actions**.
 
 ## Contact
 
