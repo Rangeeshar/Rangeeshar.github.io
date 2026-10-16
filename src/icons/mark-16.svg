@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- 16 px variant: a larger, heavier glyph so the route survives at tab size. -->
+  <rect x="0.5" y="0.5" width="31" height="31" rx="6.5" fill="#0B0F14" stroke="#2A3443"/>
+  <g transform="translate(16 17) scale(1.18) translate(-16 -17)">
+    <path d="M10.5 24.5V15a4 4 0 0 1 4-4h4.5" fill="none" stroke="#7E95FF" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="23.6" cy="11" r="3.4" fill="#FFB547"/>
+  </g>
+</svg>
