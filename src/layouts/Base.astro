@@ -51,6 +51,10 @@ const jsonLd = {
   <body>
     <a class="skip" href="#main">Skip to content</a>
     <slot />
+    <script>
+      import { initReveals } from '../lib/motion';
+      initReveals();
+    </script>
   </body>
 </html>
 

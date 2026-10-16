@@ -1,22 +1,30 @@
 ---
 import { person } from '../data/profile';
+
+// The name rises letter by letter on load.
+let n = 0;
+const lines = person.name.split(' ').map((word) => [...word].map((ch) => ({ ch, i: n++ })));
 ---
 
-<section id="edge" class="hero">
+<section id="edge" class="hero" data-hero>
   <div class="wrap">
-    <p class="hero-eyebrow mono"><span class="dot" aria-hidden="true"></span>{person.role} @ {person.company} · {person.location}</p>
+    <p class="hero-eyebrow mono" data-reveal><span class="dot" aria-hidden="true"></span>{person.role} @ {person.company} · {person.location}</p>
     <div class="hero-grid">
-      <h1>Rangeesh<br />Rajagopal</h1>
+      <h1 class="split hero-name" aria-label={person.name}>
+        {lines.map((letters) => (
+          <span class="line" aria-hidden="true">{letters.map(({ ch, i }) => <span class="w" style={`--i:${i}`}><i>{ch}</i></span>)}</span>
+        ))}
+      </h1>
       <div class="hero-side">
-        <p class="hero-lede">{person.lede}</p>
-        <div class="hero-cta">
+        <p class="hero-lede" data-reveal style="--d:500ms">{person.lede}</p>
+        <div class="hero-cta" data-reveal style="--d:700ms">
           <a class="btn primary" href="#workloads">View work</a>
           <a class="btn" href="#response">Open a connection</a>
         </div>
       </div>
     </div>
 
-    <figure class="topo stage" data-scene="topology">
+    <figure class="topo stage" data-scene="topology" data-reveal style="--d:300ms">
       <figcaption class="topo-tag label">Live system · click or tap to send your own request</figcaption>
       <canvas aria-hidden="true"></canvas>
       <div class="topo-bar">
@@ -25,15 +33,25 @@ import { person } from '../data/profile';
       </div>
     </figure>
 
-    <dl class="hero-facts mono tnum">
+    <dl class="hero-facts mono tnum" data-facts>
       {person.facts.map(([k, v]) => <div><dt>{k}</dt><dd>{v}</dd></div>)}
     </dl>
+
+    <a class="hero-cue mono" href="#gateway" aria-label="Scroll to follow your request">
+      <span>scroll to follow your request</span><i aria-hidden="true"></i>
+    </a>
   </div>
 </section>
 
 <script>
-  import { activate } from '../lib/scene';
+  import { activate, onFirstView } from '../lib/scene';
+  import { scrub, decode } from '../lib/motion';
   activate('[data-scene="topology"]', () => import('../scenes/topology'));
+
+  const hero = document.querySelector<HTMLElement>('[data-hero]');
+  if (hero) scrub(hero, undefined, { kind: 'exit', prop: '--x' });
+  const facts = document.querySelector('[data-facts]');
+  if (facts) onFirstView(facts, () => facts.querySelectorAll<HTMLElement>('dd').forEach((dd, i) => setTimeout(() => decode(dd, 1000), i * 140)), 0.5);
 </script>
 
 <style is:global>
@@ -43,6 +61,17 @@ import { person } from '../data/profile';
   .hero-grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 28px 56px; align-items: end; margin-bottom: clamp(36px, 5vw, 56px); }
   @media (max-width: 900px) { .hero-grid { grid-template-columns: minmax(0, 1fr); } }
   .hero h1 { font-size: clamp(64px, 12.5vw, 168px); line-height: 0.84; font-stretch: 75%; font-weight: 750; letter-spacing: -0.025em; }
+  .hero-name .line { display: block; white-space: nowrap; }
+  .hero-name .w > i { transition-duration: 1100ms; transition-delay: calc(120ms + var(--i) * 45ms); }
+
+  /* Scrolling away: the headline lifts and fades while the system map stays. */
+  .hero-grid, .hero-eyebrow { transform: translateY(calc(var(--x, 0) * -90px)); opacity: calc(1 - var(--x, 0) * 1.6); }
+  .topo { transform: scale(calc(1 - var(--x, 0) * 0.05)); transform-origin: 50% 0; }
+
+  .hero-cue { display: inline-flex; align-items: center; gap: 12px; margin-top: 40px; font-size: 12px; color: var(--muted); text-decoration: none; }
+  .hero-cue i { position: relative; width: 1px; height: 36px; background: var(--line); overflow: hidden; }
+  .hero-cue i::after { content: ''; position: absolute; left: -2px; top: -6px; width: 5px; height: 5px; border-radius: 50%; background: var(--hot); animation: cue 1.8s var(--ease-io) infinite; }
+  @keyframes cue { to { top: 100%; } }
   .hero-side { display: grid; gap: 24px; padding-bottom: 8px; }
   .hero-lede { font-size: clamp(19px, 2vw, 22px); line-height: 1.45; max-width: 34ch; }
   .hero-cta { display: flex; flex-wrap: wrap; gap: 10px; }

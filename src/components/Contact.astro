@@ -1,12 +1,13 @@
 ---
 import { person } from '../data/profile';
+import Words from './Words.astro';
 ---
 
 <section id="response" class="hop contact">
   <div class="wrap">
     <header class="hop-head">
       <span class="tag">response <span>· +47 ms</span></span>
-      <h2>Open a connection</h2>
+      <Words as="h2" text="Open a connection" />
       <p>Hiring, collaborating, or want to talk systems? Send me an email.</p>
     </header>
 
@@ -18,7 +19,7 @@ import { person } from '../data/profile';
 
     <div class="established">
       <p class="hs-state mono"><span aria-hidden="true">●</span> ESTABLISHED</p>
-      <a class="contact-email" href={`mailto:${person.email}`}>{person.email}</a>
+      <a class="contact-email" href={`mailto:${person.email}`} data-email>{person.email}</a>
       <div class="contact-actions">
         <button class="btn" type="button" data-copy={person.email}>Copy email</button>
         <a class="btn" href={person.linkedin} target="_blank" rel="noopener">LinkedIn ↗</a>
@@ -30,8 +31,15 @@ import { person } from '../data/profile';
 
 <script>
   import { onFirstView, replay } from '../lib/scene';
+  import { decode } from '../lib/motion';
   const hs = document.querySelector('[data-handshake]');
-  if (hs) onFirstView(hs, () => { replay(hs); replay(hs.nextElementSibling!); });
+  const email = document.querySelector<HTMLElement>('[data-email]');
+  if (hs) onFirstView(hs, () => {
+    replay(hs);
+    replay(hs.nextElementSibling!);
+    // Once the handshake completes, the address resolves out of noise.
+    if (email) setTimeout(() => decode(email, 1100), 1850);
+  });
 
   document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((b) => {
     const label = b.textContent;
