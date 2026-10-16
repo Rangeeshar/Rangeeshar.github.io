@@ -1,6 +1,6 @@
 # Rangeesh Rajagopal - Portfolio Website
 
-A modern, responsive portfolio website showcasing my work as a Senior Full-Stack Engineer with 7+ years of experience building scalable distributed systems, real-time data pipelines, and AI automation.
+A modern, responsive portfolio website showcasing my work as a Lead Software Engineer at HighLevel with 8+ years of experience building scalable distributed systems, real-time data pipelines, and AI automation.
 
 ## 🌐 Live Site
 
@@ -84,7 +84,7 @@ This repository is set up for GitHub Pages. Simply push changes to the `main` br
 
 ## 🎯 Key Highlights
 
-- **7+ years** of backend-focused full-stack engineering experience
+- **Lead Software Engineer** at HighLevel; **8+ years** of backend-focused full-stack engineering experience
 - Expertise in **Python, FastAPI, Node.js, React, Next.js**
 - Experience building systems handling **10K–100K+ RPS**
 - Proven track record of optimizing systems for **performance, reliability, and scalability**

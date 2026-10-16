@@ -14,9 +14,9 @@ grows, a cache hits). If an animation can't be named this way, cut it.
 
 | Hop | Section | Scene | Motion |
 | --- | --- | --- | --- |
-| `edge` | Hero | Live system topology on canvas; name in condensed display type; fact readouts (10K–100K+ rps, 99.95%, 850 → 490 ms, 7+ yrs) | Ambient cobalt traffic; the visitor's amber packet enters and the readout prints per-hop latency. The cursor bends nearby packets; a click sends a request |
+| `edge` | Hero | Live system topology on canvas; name in condensed display type; fact readouts (10K–100K+ rps, 99.95%, 850 → 490 ms, 8+ yrs); title: Lead Software Engineer @ HighLevel | Ambient cobalt traffic; the visitor's amber packet enters and the readout prints per-hop latency. The cursor bends nearby packets; a click sends a request |
 | `gateway` | About | Summary as three short "routes"; small photo ID badge | Route lines light as the packet passes |
-| `services` | Experience | Career as a distributed-trace waterfall; selecting a role opens its "span attributes" (real metrics) | Spans grow in sequence; metrics count up once |
+| `services` | Experience | Career as a distributed-trace waterfall, 2018 to now; overlapping roles render as parallel spans and the current role as an open span; selecting a role opens its "span attributes" (real metrics) | Spans grow in sequence; metrics count up once |
 | `workloads` | Projects | One pinned scene per project with a micro-demo instead of screenshots | Video search jumps to the matched moment; Gmail rules sort mail; cart recalculates the discount; bill splits; journal facets filter; media pipeline stages |
 | `stack` | Skills | Skills grouped by architecture layer (client, api, ai, data, infra); choosing a project lights the tools it used | Opacity and color only |
 | `response` | Contact | TCP handshake (SYN, SYN-ACK, ACK), then ESTABLISHED with contact links; the footer prints `200 OK · 47 ms` | Three packets, then fade-in |
@@ -76,9 +76,13 @@ src/
 3. **Project demos**: pinned project scenes, micro-demos, stack map, handshake.
 4. **Polish**: reduced-motion frames, perf pass against the budget, OG image, SEO, analytics.
 
-## Open decisions
+## Decisions
 
-1. Current status for the hero: open to roles, freelancing, or a new position? (The latest listed role ends Dec 2025.)
-2. The summary says 7+ years, but listed roles start Feb 2021. Add the 2018–2021 roles?
-3. Which three or four project micro-demos ship first?
-4. Keep the photo as a small badge in About, or go fully type-led?
+Resolved from the LinkedIn profile (Oct 2026):
+- Hero title: Lead Software Engineer @ HighLevel (since Feb 2026).
+- The trace covers the full career from Jan 2018 (T4TEQ, Digital Software Inc, deepcompute, Shiryam, MetaFire, Deloitte, Jupitrr AI, HighLevel).
+
+Still open:
+1. Which three or four project micro-demos ship first?
+2. Keep the photo as a small badge in About, or go fully type-led?
+3. Scope and impact bullets for the HighLevel role (currently title and dates only).
