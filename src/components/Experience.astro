@@ -1,6 +1,7 @@
 ---
 import { roles, fmtRange, fmtMonth, type YearMonth } from '../data/profile';
 import { highlight } from '../lib/text';
+import Words from './Words.astro';
 
 // Time axis in months, from the first role to the start of next year.
 const now = new Date();
@@ -8,7 +9,8 @@ const today: YearMonth = [now.getFullYear(), now.getMonth() + 1];
 const m = ([y, mo]: YearMonth) => y * 12 + mo - 1;
 const T0 = m(roles[0].start);
 const T1 = (now.getFullYear() + 1) * 12;
-const pct = (n: number) => `${((n / (T1 - T0)) * 100).toFixed(3)}%`;
+// Positions are unitless percentages of the axis, so CSS can divide them (see the bar rule).
+const pct = (n: number) => ((n / (T1 - T0)) * 100).toFixed(3);
 // Inclusive month count, the way LinkedIn reports tenure.
 const months = (s: YearMonth, e: YearMonth) => m(e) - m(s) + 1;
 const dur = (n: number) => [Math.floor(n / 12) && `${Math.floor(n / 12)}y`, n % 12 && `${n % 12}m`].filter(Boolean).join(' ');
@@ -29,19 +31,22 @@ const rows = roles.map((r, i) => {
 const startYear = roles[0].start[0];
 const ticks = Array.from({ length: now.getFullYear() + 1 - startYear + 1 }, (_, k) => startYear + k)
   .filter((y) => (y - startYear) % 2 === 0)
-  .map((y) => ({ label: `'${String(y).slice(2)}`, left: pct(y * 12 - T0) }));
+  .map((y) => ({ label: `'${String(y).slice(2)}`, left: `${pct(y * 12 - T0)}%` }));
+const tNow = pct(m(today) - T0);
 const newestFirst = [...roles].reverse();
 ---
 
-<section id="services" class="hop">
+<section id="services" class="hop pin" style="--pin:420vh" data-services>
+  <div class="pin-stage">
   <div class="wrap">
-    <header class="hop-head">
+    <header class="hop-head trace-head">
       <span class="tag">services <span>· +5 ms</span></span>
-      <h2>Eight years, one trace</h2>
-      <p>My career as a distributed trace. Each role is a span, overlapping roles run in parallel, and the current role is still in flight. Select a span to read its attributes.</p>
+      <Words as="h2" text="Eight years, one trace" />
+      <p>Scroll to travel through my career. Each role is a span; overlapping roles run in parallel, and the current one is still in flight.</p>
+      <p class="trace-clock mono tnum" aria-hidden="true"><b data-clock>{fmtMonth(today)}</b> <span data-inflight>1 span in flight</span></p>
     </header>
 
-    <div class="trace" data-trace data-t0={T0} data-t1={T1}>
+    <div class="trace" data-trace data-t0={T0} data-t1={T1} data-tnow={tNow} style={`--t:${tNow}`}>
       <div class="trace-chart">
         <div class="trace-axis" aria-hidden="true">
           <span class="label">service</span>
@@ -52,7 +57,7 @@ const newestFirst = [...roles].reverse();
           {rows.map((r) => (
             <li>
               <a class:list={['span', { open: !r.end }]} href={`#role-${r.id}`} data-span={r.id} style={r.style}
-                 data-start={m(r.start)} aria-label={`${r.title}, ${r.company}, ${fmtRange(r.start, r.end)}`}>
+                 data-start={m(r.start)} data-end={r.end ? m(r.end) : ''} aria-label={`${r.title}, ${r.company}, ${fmtRange(r.start, r.end)}`}>
                 <span class="svc">{r.svc}</span>
                 <span class="lane"><span class:list={['bar', { pt: r.partTimeUntil }]}></span></span>
                 <span class="dur tnum">{dur(r.len)}{!r.end && '+'}</span>
@@ -60,6 +65,7 @@ const newestFirst = [...roles].reverse();
             </li>
           ))}
         </ol>
+        <span class="trace-cursor" aria-hidden="true"></span>
         <p class="trace-legend label"><i class="sw solid"></i> full-time <i class="sw hatched"></i> part-time <i class="sw live"></i> in flight</p>
       </div>
 
@@ -85,6 +91,7 @@ const newestFirst = [...roles].reverse();
       </div>
     </div>
   </div>
+  </div>
 </section>
 
 <script>
@@ -93,24 +100,35 @@ const newestFirst = [...roles].reverse();
 </script>
 
 <style is:global>
+  @property --t { syntax: '<number>'; inherits: true; initial-value: 100; }
+
+  .trace-head { max-width: none; grid-template-columns: minmax(0, 1fr) auto; align-items: end; column-gap: 32px; }
+  .trace-head > :not(.trace-clock) { grid-column: 1; }
+  .trace-head p:not(.trace-clock) { max-width: 56ch; }
+  .trace-clock { grid-column: 2; grid-row: 1 / span 3; align-self: end; display: grid; justify-items: end; gap: 2px; font-size: 13px; color: var(--muted); }
+  .trace-clock b { font: 500 clamp(32px, 4.4vw, 56px)/1 var(--mono); color: var(--hot); letter-spacing: -0.03em; }
+  @media (max-width: 720px) { .trace-head { grid-template-columns: minmax(0, 1fr); } .trace-clock { grid-column: 1; grid-row: auto; justify-items: start; } }
+
   .trace { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 32px 48px; align-items: start; }
   @media (max-width: 980px) { .trace { grid-template-columns: minmax(0, 1fr); } }
-  .trace-chart { display: grid; gap: 4px; min-width: 0; }
+  .trace-chart { position: relative; display: grid; gap: 4px; min-width: 0; --lane-x: 164px; --lane-r: 74px; }
   .trace-axis, .span { display: grid; grid-template-columns: 150px minmax(0, 1fr) 60px; gap: 14px; align-items: center; }
   .trace-ticks { position: relative; height: 18px; font: 400 11px var(--mono); color: var(--muted); }
   .trace-ticks span { position: absolute; transform: translateX(-50%); }
   .trace-ticks span:first-child { transform: none; }
   .trace-axis .dur, .span .dur { text-align: right; }
   .trace-rows { list-style: none; display: grid; }
-  .span { padding: 9px 0; text-decoration: none; color: var(--muted); border-top: 1px dashed var(--line); }
+  .span { padding: 9px 0; text-decoration: none; color: var(--muted); border-top: 1px dashed var(--line); transition: color var(--dur-ui); }
   .span:hover, .span[aria-selected='true'] { color: var(--ink); }
   .span .svc { font: 400 13px var(--mono); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .span .dur { font: 400 12.5px var(--mono); }
   .span .lane { position: relative; height: 16px; }
+  /* A bar shows only the part of the role that lies left of the time cursor --t. */
   .span .bar {
-    position: absolute; top: 2px; bottom: 2px; left: var(--l); width: var(--w); min-width: 3px;
+    position: absolute; top: 2px; bottom: 2px; left: calc(var(--l) * 1%); width: calc(var(--w) * 1%); min-width: 3px;
     color: var(--accent); background: currentColor; border-radius: 1px; opacity: 0.6;
-    transform-origin: left; transition: opacity var(--dur-ui), color var(--dur-ui);
+    transform-origin: left; transform: scaleX(clamp(0, calc((var(--t) - var(--l)) / var(--w)), 1));
+    transition: opacity var(--dur-ui), color var(--dur-ui);
   }
   .span:hover .bar { opacity: 0.85; }
   .span[aria-selected='true'] .bar { opacity: 1; color: var(--hot); }
@@ -126,24 +144,44 @@ const newestFirst = [...roles].reverse();
     border-radius: 50%; background: currentColor; animation: trace-live 1.2s var(--ease-io) infinite alternate;
   }
   @keyframes trace-live { to { opacity: 0.2; } }
-  .trace.play .bar { animation: trace-grow var(--dur-scene) var(--ease-out) both; animation-delay: calc(var(--i) * 110ms); }
-  @keyframes trace-grow { from { transform: scaleX(0); } }
+  /* The time cursor: one line across every lane at --t. */
+  .trace-cursor {
+    position: absolute; top: 22px; bottom: 34px; width: 1px; background: var(--hot); pointer-events: none;
+    left: calc(var(--lane-x) + (100% - var(--lane-x) - var(--lane-r)) * var(--t) / 100);
+    box-shadow: 0 0 12px var(--hot);
+  }
+  .trace-cursor::before { content: ''; position: absolute; top: -5px; left: -4px; width: 9px; height: 9px; border-radius: 50%; background: var(--hot); }
+  .trace.settled .trace-cursor { opacity: 0; transition: opacity 600ms; }
+  .trace.tween { transition: --t 2600ms var(--ease-io); }
+
   .trace-legend { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin-top: 14px; letter-spacing: 0.04em; }
   .trace-legend .sw { display: inline-block; width: 18px; height: 8px; color: var(--accent); background: currentColor; }
   .trace-legend .sw.hatched { background: repeating-linear-gradient(135deg, currentColor 0 2px, transparent 2px 5px); box-shadow: inset 0 0 0 1px currentColor; }
   .trace-legend .sw.live { width: 8px; border-radius: 50%; color: var(--hot); }
-  @media (max-width: 560px) { .trace-axis, .span { grid-template-columns: 104px minmax(0, 1fr) 50px; gap: 8px; } .span .svc { font-size: 12px; } }
+  @media (max-width: 560px) {
+    .trace-axis, .span { grid-template-columns: 104px minmax(0, 1fr) 50px; gap: 8px; }
+    .trace-chart { --lane-x: 112px; --lane-r: 58px; }
+    .span .svc { font-size: 12px; }
+  }
 
   .trace-panels { display: grid; gap: 28px; min-width: 0; }
   .role { display: grid; gap: 10px; padding: 24px; border: 1px solid var(--line); background: var(--surface); border-radius: 4px; }
   .role[hidden] { display: none; }
-  .js .trace-panels { position: sticky; top: calc(var(--header-h) + 24px); }
+  .js .role:not([hidden]) > * { animation: role-in 520ms var(--ease-out) both; }
+  .js .role:not([hidden]) > :nth-child(n + 2) { animation-delay: 60ms; }
+  .js .role:not([hidden]) > :nth-child(n + 5) { animation-delay: 120ms; }
+  @keyframes role-in { from { opacity: 0; transform: translateY(10px); } }
   .role-where { font-weight: 500; }
   .role-when, .role-positions { font-size: 13px; color: var(--muted); }
   .role-positions { list-style: none; display: grid; gap: 2px; }
   .role-attrs { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 4px 18px; margin: 6px 0; font-size: 13px; padding-block: 12px; border-block: 1px solid var(--line); }
   .role-attrs dt { color: var(--muted); }
   .role-attrs dd { margin: 0; }
-  .role-bullets { display: grid; gap: 10px; padding-left: 18px; font-size: 16px; }
+  .role-bullets { display: grid; gap: 8px; padding-left: 18px; font-size: 15.5px; }
   .role-bullets li::marker { color: var(--muted); }
+  @media (min-width: 900px) and (min-height: 760px) and (prefers-reduced-motion: no-preference) {
+    #services .pin-stage { align-content: start; padding-top: 40px; }
+    #services .hop-head { margin-bottom: 28px; }
+    .trace-panels { max-height: calc(100svh - var(--header-h) - 260px); overflow: auto; overscroll-behavior: contain; }
+  }
 </style>

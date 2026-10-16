@@ -54,6 +54,10 @@ Rules:
 - **No animation library.** The plan called for GSAP + ScrollTrigger, but every scene turned out to need only
   Canvas 2D, CSS keyframes, `position: sticky` and IntersectionObserver. Dropping GSAP keeps total JS near 10 KB.
 - **Content as data**: everything lives in `src/data/profile.ts`; sections render from it.
+- **Scroll scenes**: `src/lib/motion.ts` runs one rAF-throttled scroll loop that writes each scene's progress to a
+  CSS custom property (`--p`, registered with `@property`, default 1 so scenes are complete without JS). Pinned
+  scenes (About, Experience) are tall sections with a sticky stage, enabled only on wide, tall viewports with motion
+  allowed. Most choreography is pure CSS math on `--p` (word reveals, wire drawing, layer assembly).
 - **Scenes** share one lifecycle (`src/lib/scene.ts`): lazy-loaded near the viewport, started while visible,
   stopped off-screen or in a background tab, final frame only under reduced motion.
 - **Server-rendered first**: the trace, demos and stack map render complete in HTML; scripts only animate and add interaction.

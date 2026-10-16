@@ -1,22 +1,24 @@
 ---
 import { layers, evidence, education, certifications, publications } from '../data/profile';
+import Words from './Words.astro';
 ---
 
 <section id="stack" class="hop">
   <div class="wrap">
     <header class="hop-head">
       <span class="tag">stack <span>· +43 ms</span></span>
-      <h2>The stack, by layer</h2>
-      <p>Skills grouped by the layer they serve. Choose a piece of work to light up exactly the tools it used.</p>
+      <Words as="h2" text="The stack, by layer" />
+      <p>The stack assembles from infrastructure up. Then a request traces each piece of work through exactly the tools it used. Pick one to hold it.</p>
     </header>
 
     <div class="stackmap" data-stackmap data-evidence={JSON.stringify(Object.fromEntries(evidence))}>
       <div class="stack-evidence" role="group" aria-label="Show the tools used in">
         {evidence.map(([label]) => <button class="btn small" type="button" aria-pressed="false" data-work={label}>{label}</button>)}
       </div>
-      <div class="stack-layers">
-        {layers.map(([layer, skills]) => (
-          <div class="stack-layer">
+      <div class="stack-layers" data-layers>
+        <svg class="stack-beam" aria-hidden="true"><path pathLength="1" data-beam /></svg>
+        {layers.map(([layer, skills], i) => (
+          <div class="stack-layer" style={`--j:${layers.length - 1 - i};--dir:${i % 2 ? 1 : -1}`}>
             <span class="label">{layer}</span>
             <ul class="chips">{skills.map((s) => <li class="chip" data-skill={s}>{s}</li>)}</ul>
           </div>
@@ -25,7 +27,7 @@ import { layers, evidence, education, certifications, publications } from '../da
       <p class="stack-status label" data-stack-status aria-live="polite"></p>
     </div>
 
-    <div class="creds">
+    <div class="creds" data-reveal>
       <div>
         <h3>Education</h3>
         <p>{education.degree}</p>
@@ -45,32 +47,84 @@ import { layers, evidence, education, certifications, publications } from '../da
 </section>
 
 <script>
+  import { scrub } from '../lib/motion';
+  import { reducedMotion, replay } from '../lib/scene';
+
+  // The stack assembles as the layers scroll in (--p on the layers box). Then a request "beam" traces a piece of
+  // work through the tools it used, cycling through the work until the visitor picks one.
   const root = document.querySelector<HTMLElement>('[data-stackmap]');
   if (root) {
     const used = JSON.parse(root.dataset.evidence!) as Record<string, string[]>;
     const buttons = [...root.querySelectorAll<HTMLButtonElement>('[data-work]')];
     const chips = [...root.querySelectorAll<HTMLElement>('[data-skill]')];
+    const box = root.querySelector<HTMLElement>('[data-layers]')!;
+    const svg = box.querySelector('svg')!;
+    const beam = box.querySelector<SVGPathElement>('[data-beam]')!;
     const status = root.querySelector<HTMLElement>('[data-stack-status]')!;
-    let pinned: string | null = null;
+    const works = Object.keys(used);
+    let pinned: string | null = null, shown: string | null = null, auto = 0, cycle = 0, assembled = false, visible = false;
 
+    // The beam drops into each layer at its first lit chip, runs under the row to the last one,
+    // then drops to the next layer, so it never crosses a label.
+    const drawBeam = (lit: HTMLElement[]) => {
+      const b = box.getBoundingClientRect();
+      svg.setAttribute('viewBox', `0 0 ${b.width} ${b.height}`);
+      const rows = new Map<Element, DOMRect[]>();
+      for (const c of lit) {
+        const row = c.closest('.stack-layer')!;
+        rows.set(row, [...(rows.get(row) ?? []), c.getBoundingClientRect()]);
+      }
+      const pts: number[][] = [];
+      for (const rects of rows.values()) {
+        const first = rects[0], last = rects[rects.length - 1];
+        const under = Math.max(...rects.map((r) => r.bottom)) - b.top + 6;
+        pts.push([first.left - b.left + first.width / 2, first.top - b.top - 4]);
+        pts.push([first.left - b.left + first.width / 2, under]);
+        if (rects.length > 1) pts.push([last.left - b.left + last.width / 2, under]);
+      }
+      beam.setAttribute('d', pts.length ? `M${pts.map((p) => p.map((n) => n.toFixed(1)).join(' ')).join(' L')}` : '');
+      replay(svg);
+    };
     const light = (work: string | null) => {
+      if (work === shown) return;
+      shown = work;
       const set = new Set(work ? used[work] : []);
       root.classList.toggle('filtering', !!work);
-      chips.forEach((c) => c.classList.toggle('lit', set.has(c.dataset.skill!)));
+      let order = 0;
+      const lit: HTMLElement[] = [];
+      chips.forEach((c) => {
+        const on = set.has(c.dataset.skill!);
+        c.classList.toggle('lit', on);
+        if (on) { c.style.setProperty('--o', String(order++)); lit.push(c); }
+      });
+      buttons.forEach((b) => b.classList.toggle('auto', !pinned && b.dataset.work === work));
       status.textContent = work ? `${work} · ${set.size} tools` : '';
+      drawBeam(lit);
     };
+    const stopAuto = () => { clearInterval(auto); auto = 0; };
+    const startAuto = () => {
+      if (auto || pinned || reducedMotion() || !assembled || !visible) return;
+      light(works[cycle++ % works.length]);
+      auto = window.setInterval(() => light(works[cycle++ % works.length]), 3200);
+    };
+
     buttons.forEach((b) => {
       const work = b.dataset.work!;
-      b.addEventListener('pointerenter', () => light(work));
-      b.addEventListener('pointerleave', () => light(pinned));
-      b.addEventListener('focus', () => light(work));
-      b.addEventListener('blur', () => light(pinned));
+      b.addEventListener('pointerenter', () => { stopAuto(); light(work); });
+      b.addEventListener('pointerleave', () => { if (pinned) light(pinned); else startAuto(); });
+      b.addEventListener('focus', () => { stopAuto(); light(work); });
       b.addEventListener('click', () => {
         pinned = pinned === work ? null : work;
         buttons.forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.work === pinned)));
+        stopAuto();
         light(pinned ?? work);
+        if (!pinned) startAuto();
       });
     });
+
+    new IntersectionObserver(([e]) => { visible = e.isIntersecting; visible ? startAuto() : stopAuto(); }, { threshold: 0.3 }).observe(box);
+    scrub(box, (p) => { if (p > 0.85 && !assembled) { assembled = true; startAuto(); } });
+    addEventListener('resize', () => { const w = shown; shown = null; light(w); });
   }
 </script>
 
@@ -78,12 +132,22 @@ import { layers, evidence, education, certifications, publications } from '../da
   .stackmap { display: grid; gap: 22px; }
   .stack-evidence { display: flex; flex-wrap: wrap; gap: 8px; }
   .stack-evidence .btn[aria-pressed='true'] { border-color: var(--hot); color: var(--hot); }
-  .stack-layers { display: grid; border-top: 1px solid var(--line); }
-  .stack-layer { display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 16px; align-items: center; padding-block: 14px; border-bottom: 1px solid var(--line); }
+  .stack-evidence .btn.auto { border-color: var(--accent); color: var(--accent); }
+  .stack-layers { position: relative; display: grid; border-top: 1px solid var(--line); overflow-x: clip; }
+  /* Layers arrive bottom-up (--j counts from the bottom), sliding in from alternating sides. */
+  .stack-layer {
+    --in: clamp(0, calc((var(--p) - var(--j) * 0.11) * 4), 1);
+    display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 16px; align-items: center; padding-block: 14px; border-bottom: 1px solid var(--line);
+    opacity: var(--in); transform: translateX(calc((1 - var(--in)) * var(--dir) * 140px));
+  }
   @media (max-width: 560px) { .stack-layer { grid-template-columns: minmax(0, 1fr); gap: 8px; } }
-  .stack-layer .chip { font-size: 13.5px; padding: 6px 11px; transition: opacity var(--dur-ui), border-color var(--dur-ui), color var(--dur-ui); }
+  .stack-layer .chip { position: relative; z-index: 1; font-size: 13.5px; padding: 6px 11px; transition: opacity var(--dur-ui), border-color var(--dur-ui), color var(--dur-ui), background var(--dur-ui), transform var(--dur-ui) var(--ease-out); }
   .stackmap.filtering .chip { opacity: 0.25; }
-  .stackmap.filtering .chip.lit { opacity: 1; border-color: var(--hot); color: var(--hot); }
+  .stackmap.filtering .chip.lit { opacity: 1; border-color: var(--hot); color: var(--hot); background: var(--surface); transform: translateY(-2px); transition-delay: calc(var(--o, 0) * 110ms); }
+  .stack-beam { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+  .stack-beam path { fill: none; stroke: var(--hot); stroke-width: 1.5; stroke-dasharray: 1; stroke-dashoffset: 0; opacity: 0.55; filter: drop-shadow(0 0 4px var(--hot)); }
+  .stack-beam.play path { animation: beam 1.1s var(--ease-io) both; }
+  @keyframes beam { from { stroke-dashoffset: 1; } }
   .stack-status { min-height: 1.4em; color: var(--hot); }
 
   .creds { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; margin-top: clamp(56px, 8vw, 96px); padding-top: 32px; border-top: 1px solid var(--line); }

@@ -5,6 +5,7 @@ import VideoSearch from './demos/VideoSearch.astro';
 import GmailRules from './demos/GmailRules.astro';
 import MediaPipeline from './demos/MediaPipeline.astro';
 import SplitBill from './demos/SplitBill.astro';
+import Words from './Words.astro';
 
 const demos = { 'video-search': VideoSearch, 'gmail-rules': GmailRules, 'media-pipeline': MediaPipeline, 'split-bill': SplitBill };
 const featured = projects.filter((p) => p.demo);
@@ -15,7 +16,7 @@ const more = projects.filter((p) => !p.demo);
   <div class="wrap">
     <header class="hop-head">
       <span class="tag">workloads <span>· +41 ms</span></span>
-      <h2>Work that runs</h2>
+      <Words as="h2" text="Work that runs" />
       <p>No screenshots. Each project below runs a small live version of what it actually does.</p>
     </header>
 
@@ -25,14 +26,14 @@ const more = projects.filter((p) => !p.demo);
         return (
           <article class="work-item" id={`work-${p.id}`}>
             <div class="work-copy">
-              <p class="label">{p.kicker}</p>
-              <h3>{p.name}</h3>
-              <p class="work-summary">{p.summary}</p>
-              <ul class="work-points">{p.points.map((pt) => <li set:html={highlight(pt)} />)}</ul>
+              <p class="label" data-reveal>{p.kicker}</p>
+              <Words as="h3" text={p.name} />
+              <p class="work-summary" data-reveal style="--d:120ms">{p.summary}</p>
+              <ul class="work-points" data-reveal style="--d:220ms">{p.points.map((pt) => <li set:html={highlight(pt)} />)}</ul>
               <ul class="chips">{p.stack.map((s) => <li class="chip">{s}</li>)}</ul>
               {p.link && <a class="work-link mono" href={p.link.href} target="_blank" rel="noopener">{p.link.label} ↗</a>}
             </div>
-            <div class="work-stage"><Demo /></div>
+            <div class="work-stage" data-boot><Demo /></div>
           </article>
         );
       })}
@@ -41,7 +42,7 @@ const more = projects.filter((p) => !p.demo);
     <h3 class="more-title">More workloads</h3>
     <div class="more">
       {more.map((p) => (
-        <article class="more-item">
+        <article class="more-item" data-reveal>
           <p class="label">{p.kicker}</p>
           <h4>{p.name}</h4>
           <p class="muted">{p.summary}</p>
@@ -69,6 +70,9 @@ const more = projects.filter((p) => !p.demo);
   .work-points { display: grid; gap: 8px; padding-left: 18px; color: var(--muted); }
   .work-link { font-size: 14px; color: var(--accent); width: fit-content; }
   .work-stage { min-width: 0; }
+  /* A demo "boots" like a screen powering on: a bright line opens into the full stage. */
+  .work-stage[data-boot] > .stage { transition: clip-path 900ms var(--ease-out), filter 900ms var(--ease-out); }
+  .reveal-ready .work-stage[data-boot]:not(.in) > .stage { clip-path: inset(49.5% 0 49.5% 0); filter: brightness(1.8); }
 
   .more-title { margin: clamp(72px, 10vw, 120px) 0 24px; }
   .more { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }

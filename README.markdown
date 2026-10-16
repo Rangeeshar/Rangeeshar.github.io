@@ -6,21 +6,23 @@ The site is told as one request travelling through the kind of systems I build: 
 
 ## Sections
 
-| Hop | Section | What moves |
-| --- | --- | --- |
-| `edge` | Intro | Live system topology: ambient traffic, your own request on click, cursor-bent packets |
-| `gateway` | About | Three "routes" that light up in sequence |
-| `services` | Experience | Career as a distributed-trace waterfall with span attributes |
-| `workloads` | Work | A live micro-demo per project: video search, media pipeline, Gmail rules, bill splitting |
-| `stack` | Skills | Skills by architecture layer; choosing a piece of work lights the tools it used |
-| `response` | Contact | A TCP handshake, then the connection is established |
+Every section is a scene. Scroll drives the story.
 
-Every scene pauses off-screen, and visitors who prefer reduced motion get each scene's final frame.
+| Hop | Section | What you see |
+| --- | --- | --- |
+| `edge` | Intro | The name rises letter by letter, the system map draws itself in, then live traffic flows. Click to send your own request; the cursor bends nearby packets. The headline lifts away as you scroll. |
+| `gateway` | About | Pinned. A request enters the gateway and fans out to three routes; each route's text lights up word by word as it is served. |
+| `services` | Experience | Pinned. Scrolling moves a time cursor from 2018 to today: roles grow under it, the clock ticks, and the detail panel follows the role in flight. |
+| `workloads` | Work | Each demo boots like a screen powering on, then runs a live version of the project, pinned beside its copy. |
+| `stack` | Skills | The stack assembles bottom-up, then a request beam traces each project through exactly the tools it used. |
+| `response` | Contact | A TCP handshake, then the email address resolves out of noise. |
+
+On phones the pinned scenes play as they scroll into view. With reduced motion, every scene shows its final frame.
 
 ## Stack
 
 - [Astro](https://astro.build), static output, about 10 KB of JavaScript in total
-- Canvas 2D and plain CSS for motion, with no animation library
+- Canvas 2D, SVG and CSS for motion, with no animation library: one scroll loop drives a `--p` progress variable per scene (`src/lib/motion.ts`)
 - Self-hosted variable fonts: Bricolage Grotesque, Instrument Sans, JetBrains Mono
 
 ## Editing content

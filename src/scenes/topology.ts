@@ -36,6 +36,10 @@ export const mount: Mount = (root, { reduced }) => {
   const C = themeColors(['line', 'muted', 'surface', 'accent', 'hot'] as const, () => draw());
 
   let W = 0, H = 0, narrow = false, active = false, running = false, last = 0, spawnAcc = 0;
+  // Intro: the graph draws itself left to right before traffic starts.
+  let intro = reduced ? 1 : 0;
+  const INTRO_S = 1.6;
+  const reveal = (id: string) => Math.min(1, Math.max(0, (intro * 1.5 - NODES[id][0]) * 3));
   let packets: Packet[] = [];
   const heat: Record<string, number> = {};
   const pointer = { x: -1e4, y: -1e4 };
@@ -101,10 +105,14 @@ export const mount: Mount = (root, { reduced }) => {
     ctx.lineWidth = 1; ctx.strokeStyle = C.line;
     for (const e of EDGES) {
       const [a, b] = e.split('|');
+      const pts = seg(a, b);
+      const len = pts.slice(1).reduce((n, q, i) => n + Math.hypot(q[0] - pts[i][0], q[1] - pts[i][1]), 0);
+      ctx.setLineDash([len * Math.min(reveal(a), reveal(b) * 0.5 + 0.5), len + 1]);
       ctx.beginPath();
-      seg(a, b).forEach(([x, y], i) => (i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)));
+      pts.forEach(([x, y], i) => (i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)));
       ctx.stroke();
     }
+    ctx.setLineDash([]);
     for (const p of packets) {
       const head = p.hot ? at(p, p.d) : bend(at(p, p.d));
       const tail = p.hot ? at(p, Math.max(0, p.d - 34)) : bend(at(p, Math.max(0, p.d - 18)));
@@ -119,14 +127,17 @@ export const mount: Mount = (root, { reduced }) => {
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     for (const id in NODES) {
-      const [x, y] = pos(id), h = heat[id] ?? 0, s = id === 'you' ? 7 : 9;
+      const shown = reveal(id);
+      if (!shown) continue;
+      ctx.globalAlpha = shown;
+      const [x, y] = pos(id), h = heat[id] ?? 0, s = (id === 'you' ? 7 : 9) * (0.6 + 0.4 * shown);
       const lit = h > 1 ? C.hot : C.accent;
       ctx.fillStyle = C.surface; ctx.strokeStyle = h > 0.05 ? lit : C.muted;
       ctx.fillRect(x - s, y - s, s * 2, s * 2);
       ctx.strokeRect(x - s + 0.5, y - s + 0.5, s * 2 - 1, s * 2 - 1);
       if (h > 0.05) {
         ctx.globalAlpha = Math.min(h, 1) * 0.9; ctx.fillStyle = lit;
-        ctx.fillRect(x - 3, y - 3, 6, 6); ctx.globalAlpha = 1;
+        ctx.fillRect(x - 3, y - 3, 6, 6); ctx.globalAlpha = shown;
       }
       const label = NODES[id][2];
       const w = ctx.measureText(label).width + 8;
@@ -135,6 +146,7 @@ export const mount: Mount = (root, { reduced }) => {
       ctx.fillStyle = id === 'you' ? C.hot : C.muted;
       ctx.fillText(label, x, y + 22);
     }
+    ctx.globalAlpha = 1;
   }
 
   function report(p: Packet, id: string) {
@@ -162,8 +174,9 @@ export const mount: Mount = (root, { reduced }) => {
     if (!running) return;
     const dt = Math.min(0.05, (t - (last || t)) / 1000);
     last = t;
+    if (intro < 1) intro = Math.min(1, intro + dt / INTRO_S);
     spawnAcc += dt;
-    if (spawnAcc > 0.11 && packets.length < 140) {
+    if (intro > 0.7 && spawnAcc > 0.11 && packets.length < 140) {
       spawnAcc = 0;
       packets.push(spawn(AMBIENT[(Math.random() * AMBIENT.length) | 0], false));
     }
@@ -198,7 +211,7 @@ export const mount: Mount = (root, { reduced }) => {
     resize();
     send();
   } else {
-    window.setTimeout(send, 700); // queued now, it flies once the scene starts
+    window.setTimeout(send, 1900); // after the intro; if queued early, it flies once the scene starts
   }
 
   return {
