@@ -1,0 +1,71 @@
+---
+import { Image } from 'astro:assets';
+import portrait from '../assets/portrait.png';
+import { person } from '../data/profile';
+
+const years = new Date().getFullYear() - person.careerStart[0];
+---
+
+<section id="gateway" class="hop">
+  <div class="wrap">
+    <header class="hop-head">
+      <span class="tag">gateway <span>· +3 ms</span></span>
+      <h2>Three routes, one engineer</h2>
+    </header>
+
+    <div class="about">
+      <aside class="badge">
+        <Image src={portrait} alt="Portrait of Rangeesh Rajagopal" width={112} height={112} densities={[1, 2]} class="badge-photo" loading="lazy" />
+        <dl class="badge-meta mono">
+          <div><dt>name</dt><dd>{person.name}</dd></div>
+          <div><dt>role</dt><dd>{person.role}</dd></div>
+          <div><dt>at</dt><dd>{person.company}</dd></div>
+          <div><dt>region</dt><dd>{person.location}</dd></div>
+          <div><dt>uptime</dt><dd class="tnum">{years}+ years</dd></div>
+        </dl>
+      </aside>
+
+      <ol class="routes" data-routes>
+        {person.routes.map((r, i) => (
+          <li class="route" style={`--i:${i}`}>
+            <span class="route-path mono"><span class="verb">GET</span> {r.path}</span>
+            <span class="route-wire" aria-hidden="true"><i></i></span>
+            <p>{r.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { onFirstView, replay } from '../lib/scene';
+  const routes = document.querySelector('[data-routes]');
+  if (routes) onFirstView(routes, () => replay(routes));
+</script>
+
+<style is:global>
+  .about { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 40px 64px; align-items: start; }
+  @media (max-width: 860px) { .about { grid-template-columns: minmax(0, 1fr); } }
+  .badge { display: grid; gap: 18px; padding: 20px; border: 1px solid var(--line); background: var(--surface); border-radius: 4px; }
+  .badge-photo { width: 112px; height: 112px; object-fit: cover; border-radius: 3px; filter: grayscale(0.15) contrast(1.05); }
+  .badge-meta { display: grid; gap: 6px; margin: 0; font-size: 12.5px; }
+  .badge-meta div { display: grid; grid-template-columns: 60px minmax(0, 1fr); gap: 10px; }
+  .badge-meta dt { color: var(--muted); }
+  .badge-meta dd { margin: 0; }
+
+  .routes { list-style: none; display: grid; }
+  .route { display: grid; grid-template-columns: 130px 64px minmax(0, 1fr); gap: 16px; align-items: baseline; padding-block: 22px; border-top: 1px solid var(--line); }
+  .route:first-child { border-top: 0; padding-top: 0; }
+  .route p { font-size: clamp(19px, 2.1vw, 24px); line-height: 1.4; }
+  .route-path { font-size: 14px; color: var(--accent); white-space: nowrap; }
+  .route-path .verb { color: var(--muted); }
+  .route-wire { position: relative; align-self: center; height: 1px; border-top: 1px dashed var(--line); }
+  .route-wire i { position: absolute; top: -3.5px; left: 100%; width: 7px; height: 7px; margin-left: -7px; border-radius: 50%; background: var(--hot); }
+  .routes.play .route-wire i { animation: route-fly 650ms var(--ease-io) both; animation-delay: calc(var(--i) * 260ms); }
+  @keyframes route-fly { from { left: 0; margin-left: 0; opacity: 0.4; } }
+  @media (max-width: 560px) {
+    .route { grid-template-columns: minmax(0, 1fr) 48px; }
+    .route p { grid-column: 1 / -1; }
+  }
+</style>

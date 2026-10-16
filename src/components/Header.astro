@@ -1,0 +1,86 @@
+---
+import { hops } from '../data/profile';
+---
+
+<header class="site-header">
+  <div class="site-header-in">
+    <a class="wordmark mono" href="#edge" aria-label="Rangeesh Rajagopal, back to top"><span>rangeesh</span><i>.</i>dev</a>
+    <nav class="site-nav" aria-label="Primary">
+      {hops.slice(1).map(([id, , label]) => <a href={`#${id}`}>{label}</a>)}
+    </nav>
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch color theme">
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18V3Z" fill="currentColor" /><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5" /></svg>
+    </button>
+  </div>
+  <div class="site-progress" aria-hidden="true"><i data-progress></i></div>
+</header>
+
+<nav class="rail" data-rail aria-label="Request path">
+  <span class="rail-ms mono tnum" data-rail-ms>+0 ms</span>
+  <ol>
+    {hops.map(([id, ms, label]) => (
+      <li><a href={`#${id}`} data-ms={ms}><span class="rail-hop mono">{id}</span><span class="rail-label">{label}</span></a></li>
+    ))}
+  </ol>
+  <i class="rail-dot" data-rail-dot aria-hidden="true"></i>
+</nav>
+
+<script>
+  import { initRail } from '../scenes/rail';
+  initRail();
+
+  const root = document.documentElement;
+  document.querySelector('[data-theme-toggle]')?.addEventListener('click', () => {
+    const dark = root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+    root.dataset.theme = dark ? 'light' : 'dark';
+    try { localStorage.setItem('theme', root.dataset.theme); } catch {}
+  });
+</script>
+
+<style is:global>
+  .site-header {
+    position: sticky; top: 0; z-index: 50;
+    padding-top: env(safe-area-inset-top, 0px);
+    background: color-mix(in srgb, var(--bg) 82%, transparent);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .site-header-in {
+    max-width: calc(1180px + var(--rail)); margin: 0 auto; height: var(--header-h);
+    padding-left: calc(var(--gutter) + var(--rail)); padding-right: max(20px, env(safe-area-inset-right, 0px));
+    display: flex; align-items: center; gap: 24px;
+  }
+  .wordmark { font-size: 14px; font-weight: 500; text-decoration: none; margin-right: auto; }
+  .wordmark i { color: var(--hot); font-style: normal; }
+  .site-nav { display: flex; gap: 22px; font-size: 15px; }
+  .site-nav a { text-decoration: none; color: var(--muted); transition: color var(--dur-micro); }
+  .site-nav a:hover { color: var(--ink); }
+  @media (max-width: 720px) { .site-nav { display: none; } }
+  .theme-toggle { display: grid; place-items: center; width: 36px; height: 36px; border: 1px solid var(--line); border-radius: 3px; background: transparent; color: var(--ink); cursor: pointer; }
+  .theme-toggle:hover { border-color: var(--ink); }
+  .site-progress { height: 2px; }
+  .site-progress i { display: block; height: 100%; background: var(--hot); transform: scaleX(0); transform-origin: left; }
+  @media (min-width: 1240px) { .site-progress { display: none; } }
+
+  .rail { display: none; }
+  @media (min-width: 1240px) {
+    .rail {
+      display: block; position: fixed; z-index: 40; top: calc(var(--header-h) + 48px);
+      left: max(24px, calc((100vw - 1180px - var(--rail)) / 2 + 4px)); width: 108px;
+    }
+    .rail-ms { display: block; font-size: 12px; color: var(--hot); margin-bottom: 18px; padding-left: 20px; }
+    .rail ol { list-style: none; position: relative; display: grid; gap: 34px; }
+    .rail ol::before { content: ''; position: absolute; left: 3.5px; top: 6px; bottom: 6px; border-left: 1px dashed var(--line); }
+    .rail a { position: relative; display: grid; gap: 1px; padding-left: 20px; text-decoration: none; color: var(--muted); }
+    .rail a::before { content: ''; position: absolute; left: 0; top: 5px; width: 8px; height: 8px; border: 1px solid var(--muted); background: var(--bg); }
+    .rail a[aria-current] { color: var(--ink); }
+    .rail a[aria-current]::before { border-color: var(--hot); }
+    .rail-hop { font-size: 12px; }
+    .rail-label { font-size: 12.5px; opacity: 0.8; }
+    .rail-dot {
+      position: absolute; left: 1px; top: 0; width: 6px; height: 6px; margin-top: 6px;
+      border-radius: 50%; background: var(--hot); box-shadow: 0 0 0 4px color-mix(in srgb, var(--hot) 25%, transparent);
+      pointer-events: none;
+    }
+  }
+</style>

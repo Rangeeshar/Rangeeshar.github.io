@@ -48,41 +48,33 @@ Rules:
 3. Content is complete at rest; motion only reveals it.
 4. `prefers-reduced-motion` shows each scene's final frame, with the same information.
 
-## Architecture
+## Architecture (as built)
 
-- **Astro**, static output, deployed to GitHub Pages by one Actions workflow.
-- **GSAP + ScrollTrigger** as the only motion dependency (pinned and scrubbed scenes).
-- **Canvas 2D** for the topology; no Three.js.
-- **Content as data**: one Markdown file per project, roles, metrics and skills in a typed `profile.ts`.
-- **Scenes as modules** exporting `mount()` / `destroy()`, loaded near the viewport.
-- **Budget**: JS < 90 KB gzipped, LCP < 1.2 s on 4G, CLS 0, Lighthouse 95+.
-- **Accessibility**: canvas is `aria-hidden`; all content is semantic HTML; keyboard paths and visible focus.
+- **Astro 7**, static output, deployed to GitHub Pages by `.github/workflows/deploy.yml`.
+- **No animation library.** The plan called for GSAP + ScrollTrigger, but every scene turned out to need only
+  Canvas 2D, CSS keyframes, `position: sticky` and IntersectionObserver. Dropping GSAP keeps total JS near 10 KB.
+- **Content as data**: everything lives in `src/data/profile.ts`; sections render from it.
+- **Scenes** share one lifecycle (`src/lib/scene.ts`): lazy-loaded near the viewport, started while visible,
+  stopped off-screen or in a background tab, final frame only under reduced motion.
+- **Server-rendered first**: the trace, demos and stack map render complete in HTML; scripts only animate and add interaction.
+- **Accessibility**: canvas is `aria-hidden`; the trace is a keyboard-operable tablist; visible focus; skip link.
 
 ```
 src/
-  content/projects/*.md
-  content/profile.ts
-  scenes/topology.ts  trace.ts  handshake.ts  demos/*
-  components/*.astro
-  styles/tokens.css
+  data/profile.ts
+  components/*.astro, components/demos/*.astro
+  scenes/topology.ts  rail.ts  trace.ts  demos/*
+  lib/scene.ts  lib/text.ts
+  styles/global.css
   pages/index.astro
 .github/workflows/deploy.yml
 ```
 
-## Phases
+## Status
 
-1. **Foundation**: Astro, tokens, type, content files, every section as static HTML, Pages deploy.
-2. **Hero + trace**: topology canvas with cursor routing; trace waterfall with span attributes.
-3. **Project demos**: pinned project scenes, micro-demos, stack map, handshake.
-4. **Polish**: reduced-motion frames, perf pass against the budget, OG image, SEO, analytics.
-
-## Decisions
-
-Resolved from the LinkedIn profile (Oct 2026):
-- Hero title: Lead Software Engineer @ HighLevel (since Feb 2026).
-- The trace covers the full career from Jan 2018 (T4TEQ, Digital Software Inc, deepcompute, Shiryam, MetaFire, Deloitte, Jupitrr AI, HighLevel).
+All four phases are built: foundation, hero and trace, project demos, and polish (reduced motion, OG image,
+JSON-LD, theme toggle). Featured demos: Semantic Video Search, the Jupitrr media pipeline, Gmail Actions and SplitBiller.
+Discount Store and Nurexus are listed without demos. The photo appears as a small badge in About.
 
 Still open:
-1. Which three or four project micro-demos ship first?
-2. Keep the photo as a small badge in About, or go fully type-led?
-3. Scope and impact bullets for the HighLevel role (currently title and dates only).
+1. Scope and impact bullets for the HighLevel role (currently title and dates only).

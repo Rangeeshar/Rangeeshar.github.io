@@ -1,0 +1,59 @@
+---
+// Illustrative stage timings for the demo, in milliseconds per clip.
+const stages = [
+  { id: 'ingest', ms: 700 },
+  { id: 'transcribe', ms: 1500 },
+  { id: 'segment', ms: 900 },
+  { id: 'render', ms: 1800 },
+  { id: 'export', ms: 800 },
+];
+// Resting state: a clip in every stage at a different point of progress.
+const rest = [0.8, 0.45, 0.6, 0.3, 0.9];
+---
+
+<div class="mp stage" data-demo="media-pipeline" data-stages={JSON.stringify(stages)}>
+  <div class="demo-bar"><span class="label">Pipeline · illustrative timings</span><span class="label tnum" data-done>exported · 38 clips</span></div>
+  <ol class="mp-stages">
+    {stages.map((s, i) => (
+      <li class="mp-stage" data-stage={s.id}>
+        <span class="mp-name mono">{s.id}</span>
+        <span class="mp-clip mono tnum" data-clip>clip_{String(42 - i).padStart(3, '0')}</span>
+        <span class="mp-bar"><i data-fill style={`transform:scaleX(${rest[i]})`}></i></span>
+        <span class="mp-queue mono tnum" data-queue>queue {i === 1 || i === 3 ? 1 : 0}</span>
+      </li>
+    ))}
+  </ol>
+  <ol class="mp-log mono tnum" data-log aria-hidden="true">
+    <li>clip_037 · export · done <span>0.8 s</span></li>
+    <li>clip_038 · render · done <span>1.8 s</span></li>
+    <li>clip_039 · segment · done <span>0.9 s</span></li>
+  </ol>
+  <p class="mp-fact">Optimizing this pipeline cut processing time by <strong class="metric">55%</strong> and CPU usage by <strong class="metric">30%</strong>.</p>
+</div>
+
+<script>
+  import { activate } from '../../lib/scene';
+  activate('[data-demo="media-pipeline"]', () => import('../../scenes/demos/mediaPipeline'));
+</script>
+
+<style is:global>
+  .mp { display: grid; gap: 16px; padding: 18px; }
+  .mp-stages { list-style: none; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; position: relative; }
+  .mp-stage { display: grid; gap: 6px; padding: 12px 10px; background: var(--bg); border: 1px solid var(--line); border-radius: 3px; min-width: 0; transition: border-color var(--dur-ui); }
+  .mp-stage.busy { border-color: var(--accent); }
+  .mp-stage.flash { border-color: var(--hot); }
+  .mp-name { font-size: 12px; font-weight: 500; }
+  .mp-clip { font-size: 11.5px; color: var(--hot); min-height: 1.4em; }
+  .mp-clip:empty::before { content: 'idle'; color: var(--muted); }
+  .mp-bar { height: 4px; background: var(--line); border-radius: 2px; overflow: hidden; }
+  .mp-bar i { display: block; height: 100%; background: var(--accent); transform-origin: left; }
+  .mp-queue { font-size: 11px; color: var(--muted); }
+  @media (max-width: 560px) {
+    .mp-stages { grid-template-columns: minmax(0, 1fr); }
+    .mp-stage { grid-template-columns: 90px 72px minmax(0, 1fr) 56px; align-items: center; }
+  }
+  .mp-log { list-style: none; display: grid; gap: 3px; font-size: 12px; color: var(--muted); min-height: 4.6em; }
+  .mp-log li { display: flex; justify-content: space-between; gap: 10px; }
+  .mp-log li:first-child { color: var(--ink); }
+  .mp-fact { font-size: 15px; }
+</style>

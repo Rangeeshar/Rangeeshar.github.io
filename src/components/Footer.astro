@@ -1,0 +1,28 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p class="mono tnum"><span class="ok">200 OK</span> · request served <span data-elapsed></span></p>
+    <p class="mono muted">© {year} Rangeesh Rajagopal · <a href="https://github.com/Rangeeshar/Rangeeshar.github.io" target="_blank" rel="noopener">source</a></p>
+  </div>
+</footer>
+
+<script>
+  // The visitor's "request" has been in flight since the page loaded.
+  const el = document.querySelector<HTMLElement>('[data-elapsed]');
+  if (el) {
+    const show = () => {
+      const s = Math.round(performance.now() / 1000);
+      el.textContent = `in ${s >= 60 ? `${Math.floor(s / 60)}m ` : ''}${s % 60}s of your time. Thanks for reading.`;
+    };
+    new IntersectionObserver(([e]) => e.isIntersecting && show()).observe(el);
+  }
+</script>
+
+<style is:global>
+  .site-footer { border-top: 1px solid var(--line); padding-block: 28px calc(28px + env(safe-area-inset-bottom, 0px)); font-size: 13px; }
+  .site-footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; }
+  .site-footer .ok { color: var(--ok); }
+</style>
